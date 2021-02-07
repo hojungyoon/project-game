@@ -1,26 +1,142 @@
 package com.football.pms.util;
 
-import java.util.Random;
-
 public class List {
 
-  public static String makeRanName(String[] str, String[] str2) {
-    Random randomNum = new Random();
+  Node first;
+  Node last;
+  private int size = 0;
 
-    int random1 = randomNum.nextInt(str.length);
-    String a = str[random1];
+  public void add(Object obj) {
+    Node node = new Node(obj);
 
-    int random2 = randomNum.nextInt(str2.length);
-    String b = str[random2];
+    if (last == null) {
+      last = node;
+      first = node;
+    } else { 
+      last.next = node; 
+      node.prev = last; 
+      last = node;
+    }
 
-    return a + " " + b;
+    size++;
   }
 
-  public String nameReturn() {
-    Name name = new Name();
-    return makeRanName(name.getSecoundNames(), name.getFirstNames());
+  public Object[] toArray() {
+    Object[] arr = new Object[size];
 
+    Node cursor = this.first;
+    int i = 0;
+
+    while (cursor != null) {
+      arr[i++] = cursor.obj;
+      cursor = cursor.next;
+    }
+    return arr;
   }
+
+  public Object get(int index) {
+    if (index < 0 || index >= this.size) {
+      return null;
+    }
+
+    int count = 0;
+    Node cursor = first;
+    while (cursor != null) {
+      if (index == count++) {
+        return cursor.obj;
+      }
+      cursor = cursor.next;
+    }
+    return null;
+  }
+
+  public boolean delete(Object obj) {
+    Node cursor = first;
+    while (cursor != null) {
+      if (cursor.obj.equals(obj)) {
+        this.size--;
+        if (first == last) {
+          first = last = null;
+          return true;
+        }
+        if (cursor == first) {
+          first = cursor.next;
+          cursor.prev = null;
+        } else {
+          cursor.prev.next = cursor.next;
+          if (cursor.next != null) {
+            cursor.next.prev = cursor.prev;
+          }
+        }
+        if (cursor == last) {
+          last = cursor.prev;
+        }
+        return true;
+      }
+      cursor = cursor.next;
+    }
+    return false;
+  }
+
+  public Object delete(int index) {
+    if (index < 0 || index >= this.size) {
+      return null;
+    }
+
+    Object deleted = null;
+    int count = 0;
+    Node cursor = first;
+    while (cursor != null) {
+      if (index == count++) {
+        deleted = cursor.obj; // 삭제될 항목을 보관해 둔다.
+        this.size--;
+        if (first == last) {
+          first = last = null;
+          break;
+        }
+        if (cursor == first) {
+          first = cursor.next;
+          cursor.prev = null;
+        } else {
+          cursor.prev.next = cursor.next;
+          if (cursor.next != null) {
+            cursor.next.prev = cursor.prev;
+          }
+        }
+        if (cursor == last) {
+          last = cursor.prev;
+        }
+        break;
+      }
+      cursor = cursor.next;
+    }
+    return deleted;
+  }
+
+  public int indexOf(Object obj) {
+    Object[] list = this.toArray();
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].equals(obj)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public int size() {
+    return this.size;
+  }
+
+  static class Node {
+    Object obj;
+    Node next;
+    Node prev;
+
+    Node(Object obj) {
+      this.obj = obj;
+    }
+  }
+
 
 
 }
