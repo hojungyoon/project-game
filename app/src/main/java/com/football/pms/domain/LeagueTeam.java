@@ -9,10 +9,10 @@ public class LeagueTeam {
   int teamCode;
   String teamName;
   String coach;
-  public Striker striker;
-  public Midfielder midfielder;
-  public Defender defender;
-  public Kipper kipper;
+  public Striker[] striker;
+  public Midfielder[] midfielder;
+  public Defender[] defender;
+  public Kipper[] kipper;
   int win;
   int loose;
   int draw;
@@ -23,30 +23,6 @@ public class LeagueTeam {
   }
   public void setTeamCode(int teamCode) {
     this.teamCode = teamCode;
-  }
-  public Striker getStriker() {
-    return striker;
-  }
-  public void setStriker(Striker striker) {
-    this.striker = striker;
-  }
-  public Midfielder getMidfielder() {
-    return midfielder;
-  }
-  public void setMidfielder(Midfielder midfielder) {
-    this.midfielder = midfielder;
-  }
-  public Defender getDefender() {
-    return defender;
-  }
-  public void setDefender(Defender defender) {
-    this.defender = defender;
-  }
-  public Kipper getKipper() {
-    return kipper;
-  }
-  public void setKipper(Kipper kipper) {
-    this.kipper = kipper;
   }
   public String getTeamName() {
     return teamName;
@@ -59,6 +35,30 @@ public class LeagueTeam {
   }
   public void setCoach(String coach) {
     this.coach = coach;
+  }
+  public Striker[] getStriker() {
+    return striker;
+  }
+  public void setStriker(Striker[] striker) {
+    this.striker = striker;
+  }
+  public Midfielder[] getMidfielder() {
+    return midfielder;
+  }
+  public void setMidfielder(Midfielder[] midfielder) {
+    this.midfielder = midfielder;
+  }
+  public Defender[] getDefender() {
+    return defender;
+  }
+  public void setDefender(Defender[] defender) {
+    this.defender = defender;
+  }
+  public Kipper[] getKipper() {
+    return kipper;
+  }
+  public void setKipper(Kipper[] kipper) {
+    this.kipper = kipper;
   }
   public int getWin() {
     return win;
@@ -84,6 +84,5 @@ public class LeagueTeam {
   public void setLeagueWin(int leagueWin) {
     this.leagueWin = leagueWin;
   }
-
 
 }

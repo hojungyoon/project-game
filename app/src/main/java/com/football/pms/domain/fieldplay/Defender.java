@@ -9,6 +9,7 @@ public class Defender {
   String position;
   int dismissal;
   int goal;
+  int assist;
 
   public String getName() {
     return name;
