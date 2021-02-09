@@ -288,10 +288,16 @@ public class mainHandler {
     }
   }
 
-  public void makeFAplayer() {
-    Striker[] faSta = new Striker[teamStriker];
 
-    for (int i = 0; i < teamStriker; i++) {
+  private int faSize = 5;
+
+  public void makeFAplayer() {
+
+    Striker[] faSta = new Striker[faSize];
+    Midfielder[] faMda = new Midfielder[faSize];
+    Defender[] faDfa = new Defender[faSize];
+
+    for (int i = 0; i < faSize; i++) {
       Striker fast = new Striker();
       fast.setName(ProfileSetting.makeRanName()); 
       fast.setAge(ProfileSetting.age()); 
@@ -303,13 +309,8 @@ public class mainHandler {
       fast.setGoal(0);
 
       faSta[i] = fast;
-
       fa.setStriker(faSta);
-    }
 
-    Midfielder[] faMda = new Midfielder[teamMidfielder];
-
-    for (int i = 0; i < teamMidfielder; i++) {
       Midfielder md = new Midfielder();
       md.setName(ProfileSetting.makeRanName()); 
       md.setAge(ProfileSetting.age()); 
@@ -321,13 +322,8 @@ public class mainHandler {
       md.setGoal(0);
 
       faMda[i] = md;
-
       fa.setMidfielder(faMda);
-    }
 
-    Defender[] faDfa = new Defender[teamDefender];
-
-    for (int i = 0; i < teamDefender; i++) {
       Defender df = new Defender();
       df.setName(ProfileSetting.makeRanName()); 
       df.setAge(ProfileSetting.age()); 
@@ -339,7 +335,6 @@ public class mainHandler {
       df.setGoal(0);
 
       faDfa[i] = df;
-
       fa.setDefender(faDfa);
     }
 
@@ -355,7 +350,6 @@ public class mainHandler {
       kp.setNation(ProfileSetting.nationality());
 
       faKpa[i] = kp;
-
       fa.setKipper(faKpa);
     }
 
@@ -365,10 +359,20 @@ public class mainHandler {
   public void FAplayerList() {
 
     System.out.printf("\n<<<<< FA선수 >>>>>\n");
-    for (int i = 0; i < teamStriker; i++) {
+    for (int i = 0; i < faSize; i++) {
       System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
           , i+1, fa.striker[i].getName(), fa.striker[i].getNation(), fa.striker[i].getAge()
           ,fa.striker[i].getHeight(), fa.striker[i].getWeight());
+    }
+    for (int i = 0; i < faSize; i++) {
+      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+          , i+1, fa.midfielder[i].getName(), fa.midfielder[i].getNation(), fa.midfielder[i].getAge()
+          ,fa.midfielder[i].getHeight(), fa.midfielder[i].getWeight());
+    }
+    for (int i = 0; i < faSize; i++) {
+      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+          , i+1, fa.defender[i].getName(), fa.defender[i].getNation(), fa.defender[i].getAge()
+          ,fa.defender[i].getHeight(), fa.defender[i].getWeight());
     }
     System.out.printf("\n--------------------\n");
   }
