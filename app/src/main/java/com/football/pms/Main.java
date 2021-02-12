@@ -22,9 +22,7 @@ public class Main {
         case "2":
           break;
         default : 
-          System.out.printf("\n===================="
-              + "\n다시 입력해 주세요."
-              + "\n====================\n");
+          System.out.printf("\n<<<<<다시 입력해 주세요.>>>>>\n");
           continue;
       }
       System.out.println("[ GoodBye! ]");

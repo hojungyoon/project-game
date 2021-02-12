@@ -8,7 +8,7 @@ import com.football.pms.domain.fieldplay.Striker;
 public class LeagueTeam {
   int teamCode;
   String teamName;
-  String coach;
+  String coachName;
   public Striker[] striker;
   public Midfielder[] midfielder;
   public Defender[] defender;
@@ -31,10 +31,10 @@ public class LeagueTeam {
     this.teamName = teamName;
   }
   public String getCoach() {
-    return coach;
+    return coachName;
   }
   public void setCoach(String coach) {
-    this.coach = coach;
+    this.coachName = coach;
   }
   public Striker[] getStriker() {
     return striker;

@@ -1,4 +1,9 @@
-package com.football.pms.domain.fieldplay;
+package com.football.pms.domain;
+
+import com.football.pms.domain.fieldplay.Defender;
+import com.football.pms.domain.fieldplay.Kipper;
+import com.football.pms.domain.fieldplay.Midfielder;
+import com.football.pms.domain.fieldplay.Striker;
 
 public class FA {
   public Striker[] striker;
