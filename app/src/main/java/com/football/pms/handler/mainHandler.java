@@ -68,7 +68,7 @@ public class mainHandler {
             //            setting.FAplayerList();
             //            continue;
           case 4:
-            setting.redyLeague();
+            setting.playLeague();
             continue;
         }
         break;

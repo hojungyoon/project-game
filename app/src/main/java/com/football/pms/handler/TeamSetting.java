@@ -27,11 +27,11 @@ public class TeamSetting {
 
   private List list = new List();
   //  private List FAlist = new List();
-  Random r = new Random();
+  Random r;
   int[] nums = new int[teamSize];
 
   public void makeTeam(String tName, String tCoach) {
-
+    r = new Random();
 
     for (int i1 = 0; i1 < nums.length; i1++) {
       int temp = r.nextInt(teamSize);
@@ -380,20 +380,10 @@ public class TeamSetting {
     return null;
   }
 
-  public void redyLeague() {
+  public void playLeague() {
+    r = new Random();
 
-    int versus = 8;
-    LeagueTeam[] aTeam = new LeagueTeam[teamSize];
-    LeagueTeam[] bTeam = new LeagueTeam[teamSize];
-
-    for (int y = 0; y < teamSize; y++) {
-      league = findByNo(nums[y]);
-      league = findByNo(nums[y]);
-      aTeam[y] = league;
-      bTeam[y] = league;
-    }
-
-    for (int i1 = 0; i1 < versus; i1++) {
+    for (int i1 = 0; i1 < nums.length; i1++) {
       int temp = r.nextInt(teamSize);
       nums[i1] = temp;
 
@@ -405,16 +395,11 @@ public class TeamSetting {
       }
     }
 
-    for (int o = 0; o < versus; o++) {
-      System.out.printf("\n[ %s ]", aTeam[nums[o]].getTeamName());
-      for (int p = 0; p < teamSize; p++) {
-        if (aTeam[nums[o]].getTeamName().equalsIgnoreCase(bTeam[nums[p]].getTeamName())) {
-          continue;
-        } else {
-          System.out.printf(" vs [ %s ]\n", bTeam[nums[p]].getTeamName());
-          break;
-        }
-      }
+    for (int o = 0; o < (teamSize >> 1); o++) {
+      league = findByNo(nums[o]);
+      System.out.printf("\n[ %s ]",league.getTeamName());
+      league = findByNo(nums[o + 8]);
+      System.out.printf(" vs [ %s ]\n", league.getTeamName());
     }
   }
 
