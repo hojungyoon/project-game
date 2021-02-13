@@ -37,7 +37,7 @@ public class ProfileSetting {
 
     String[] firstTeamName = { "진격의", "동네근처", "할렐루야", "소심", "동네북", "바라심경"
         , "청양고추", "타코야끼", "콩나물", "설레발", "끼리끼리", "오합지졸", "쌈바"
-        , "전국시대", "종합병원"};
+        , "전국시대", "종합병원", "가리비"};
     String[] SecondTeamName = { "마드리드", "유나이티드", "FC"};
 
     int r = randomNum.nextInt(SecondTeamName.length);
@@ -78,7 +78,7 @@ public class ProfileSetting {
   public static String coachName(int i) {
     String[] name = { "김감독", "호센 모리뉴", "우르겜 칼롭", "낙엘스안", "앙토니오 쿤텐"
         , "아드리안 파롤루", "체사테 푸론달리", "졸지 알루미론", "디엑 시오네메", "하아호 헬리히"
-        , "안디 후터", "스팁 부룩스", "칼롭 안젤로트", "로날도 쿠안", "미칸 아테르타"};
+        , "안디 후터", "스팁 부룩스", "칼롭 안젤로트", "로날도 쿠안", "미칸 아테르타", "기네릭 제든"};
 
     return name[i];
   }

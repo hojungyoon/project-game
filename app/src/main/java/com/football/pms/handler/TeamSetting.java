@@ -18,7 +18,7 @@ public class TeamSetting {
 
   private int i = 0;
 
-  private int teamSize = 15;
+  private int teamSize = 16;
 
   private int teamStriker = 4;
   private int teamMidfielder = 7;
@@ -26,12 +26,13 @@ public class TeamSetting {
   private int teamKipper = 2;
 
   private List list = new List();
-  private List FAlist = new List();
+  //  private List FAlist = new List();
+  Random r = new Random();
+  int[] nums = new int[teamSize];
 
   public void makeTeam(String tName, String tCoach) {
 
-    Random r = new Random();
-    int[] nums = new int[15];
+
     for (int i1 = 0; i1 < nums.length; i1++) {
       int temp = r.nextInt(teamSize);
       nums[i1] = temp;
@@ -48,7 +49,7 @@ public class TeamSetting {
       league = new LeagueTeam();
       league.setTeamCode(this.i);
       league.setTeamName(ProfileSetting.makeTeamName(nums[this.i]));
-      league.setCoach(ProfileSetting.coachName(i));
+      league.setCoach(ProfileSetting.coachName(nums[this.i]));
 
 
       Striker[] sta = new Striker[teamStriker];
@@ -147,6 +148,9 @@ public class TeamSetting {
 
     System.out.printf("팀 이름 : %s\n", league.getTeamName());
     System.out.printf("팀 감독 : %s\n", league.getCoach());
+    System.out.printf("전   적 : %d승 %d무 %d패\n"
+        , league.getWin(), league.getLoose(), league.getDraw());
+    System.out.printf("리그우승 : %d회\n", league.getLeagueWin());
     System.out.printf("<<<<< 선수목록 >>>>>\n");
     System.out.printf("1. 공격수\n");
     for (int i = 0; i < teamStriker; i++) {
@@ -242,13 +246,11 @@ public class TeamSetting {
   }
 
   public void otherTeam() {
-    for (int i = 1; i < teamSize; i++) {
-      league = findByNo(i);
-      System.out.printf("\n%d. %s\n", i, league.getTeamName());
+    for (int h = 1; h < teamSize; h++) {
+      league = findByNo(h);
+      System.out.printf("\n%d. %s (%d승 %d무 %d패)\n"
+          , h, league.getTeamName(), league.getWin(), league.getLoose(), league.getDraw());
     }
-  }
-
-  public void otherTeamInfo() {
     int no = Prompt.inputInt("\n(뒤로가기 : 99)> ");
     if (no == 99) {
       return;
@@ -279,93 +281,93 @@ public class TeamSetting {
     }
   }
 
-  private int faSize = 5;
-
-  public void makeFAplayer() {
-
-    Striker[] faSta = new Striker[faSize];
-    Midfielder[] faMda = new Midfielder[faSize];
-    Defender[] faDfa = new Defender[faSize];
-
-    for (int i = 0; i < faSize; i++) {
-      Striker fast = new Striker();
-      fast.setName(ProfileSetting.makeRanName()); 
-      fast.setAge(ProfileSetting.age()); 
-      fast.setHeight(ProfileSetting.height()); 
-      fast.setWeight(ProfileSetting.weight()); 
-      fast.setPosition("Striker");
-      fast.setNation(ProfileSetting.nationality());
-      fast.setDismissal(0);
-      fast.setGoal(0);
-
-      faSta[i] = fast;
-      fa.setStriker(faSta);
-
-      Midfielder md = new Midfielder();
-      md.setName(ProfileSetting.makeRanName()); 
-      md.setAge(ProfileSetting.age()); 
-      md.setHeight(ProfileSetting.height()); 
-      md.setWeight(ProfileSetting.weight()); 
-      md.setPosition("Midfielder");
-      md.setNation(ProfileSetting.nationality());
-      md.setDismissal(0);
-      md.setGoal(0);
-
-      faMda[i] = md;
-      fa.setMidfielder(faMda);
-
-      Defender df = new Defender();
-      df.setName(ProfileSetting.makeRanName()); 
-      df.setAge(ProfileSetting.age()); 
-      df.setHeight(ProfileSetting.height()); 
-      df.setWeight(ProfileSetting.weight()); 
-      df.setPosition("Defender");
-      df.setNation(ProfileSetting.nationality());
-      df.setDismissal(0);
-      df.setGoal(0);
-
-      faDfa[i] = df;
-      fa.setDefender(faDfa);
-    }
-
-    Kipper[] faKpa = new Kipper[teamKipper];
-
-    for (int i = 0; i < teamKipper; i++) {
-      Kipper kp = new Kipper();
-      kp.setName(ProfileSetting.makeRanName()); 
-      kp.setAge(ProfileSetting.age()); 
-      kp.setHeight(kipperHei()); 
-      kp.setWeight(ProfileSetting.weight()); 
-      kp.setPosition("Kipper");
-      kp.setNation(ProfileSetting.nationality());
-
-      faKpa[i] = kp;
-      fa.setKipper(faKpa);
-    }
-
-    FAlist.add(fa);
-  }
-
-  public void FAplayerList() {
-
-    System.out.printf("\n<<<<< FA선수 >>>>>\n");
-    for (int i = 0; i < faSize; i++) {
-      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-          , i+1, fa.striker[i].getName(), fa.striker[i].getNation(), fa.striker[i].getAge()
-          ,fa.striker[i].getHeight(), fa.striker[i].getWeight());
-    }
-    for (int i = 0; i < faSize; i++) {
-      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-          , i+1, fa.midfielder[i].getName(), fa.midfielder[i].getNation(), fa.midfielder[i].getAge()
-          ,fa.midfielder[i].getHeight(), fa.midfielder[i].getWeight());
-    }
-    for (int i = 0; i < faSize; i++) {
-      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-          , i+1, fa.defender[i].getName(), fa.defender[i].getNation(), fa.defender[i].getAge()
-          ,fa.defender[i].getHeight(), fa.defender[i].getWeight());
-    }
-    System.out.printf("\n--------------------\n");
-  }
+  //  private int faSize = 5;
+  //
+  //  public void makeFAplayer() {
+  //
+  //    Striker[] faSta = new Striker[faSize];
+  //    Midfielder[] faMda = new Midfielder[faSize];
+  //    Defender[] faDfa = new Defender[faSize];
+  //
+  //    for (int i = 0; i < faSize; i++) {
+  //      Striker fast = new Striker();
+  //      fast.setName(ProfileSetting.makeRanName()); 
+  //      fast.setAge(ProfileSetting.age()); 
+  //      fast.setHeight(ProfileSetting.height()); 
+  //      fast.setWeight(ProfileSetting.weight()); 
+  //      fast.setPosition("Striker");
+  //      fast.setNation(ProfileSetting.nationality());
+  //      fast.setDismissal(0);
+  //      fast.setGoal(0);
+  //
+  //      faSta[i] = fast;
+  //      fa.setStriker(faSta);
+  //
+  //      Midfielder md = new Midfielder();
+  //      md.setName(ProfileSetting.makeRanName()); 
+  //      md.setAge(ProfileSetting.age()); 
+  //      md.setHeight(ProfileSetting.height()); 
+  //      md.setWeight(ProfileSetting.weight()); 
+  //      md.setPosition("Midfielder");
+  //      md.setNation(ProfileSetting.nationality());
+  //      md.setDismissal(0);
+  //      md.setGoal(0);
+  //
+  //      faMda[i] = md;
+  //      fa.setMidfielder(faMda);
+  //
+  //      Defender df = new Defender();
+  //      df.setName(ProfileSetting.makeRanName()); 
+  //      df.setAge(ProfileSetting.age()); 
+  //      df.setHeight(ProfileSetting.height()); 
+  //      df.setWeight(ProfileSetting.weight()); 
+  //      df.setPosition("Defender");
+  //      df.setNation(ProfileSetting.nationality());
+  //      df.setDismissal(0);
+  //      df.setGoal(0);
+  //
+  //      faDfa[i] = df;
+  //      fa.setDefender(faDfa);
+  //    }
+  //
+  //    Kipper[] faKpa = new Kipper[teamKipper];
+  //
+  //    for (int i = 0; i < teamKipper; i++) {
+  //      Kipper kp = new Kipper();
+  //      kp.setName(ProfileSetting.makeRanName()); 
+  //      kp.setAge(ProfileSetting.age()); 
+  //      kp.setHeight(kipperHei()); 
+  //      kp.setWeight(ProfileSetting.weight()); 
+  //      kp.setPosition("Kipper");
+  //      kp.setNation(ProfileSetting.nationality());
+  //
+  //      faKpa[i] = kp;
+  //      fa.setKipper(faKpa);
+  //    }
+  //
+  //    FAlist.add(fa);
+  //  }
+  //
+  //  public void FAplayerList() {
+  //
+  //    System.out.printf("\n<<<<< FA선수 >>>>>\n");
+  //    for (int i = 0; i < faSize; i++) {
+  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+  //          , i+1, fa.striker[i].getName(), fa.striker[i].getNation(), fa.striker[i].getAge()
+  //          ,fa.striker[i].getHeight(), fa.striker[i].getWeight());
+  //    }
+  //    for (int i = 0; i < faSize; i++) {
+  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+  //          , i+1, fa.midfielder[i].getName(), fa.midfielder[i].getNation(), fa.midfielder[i].getAge()
+  //          ,fa.midfielder[i].getHeight(), fa.midfielder[i].getWeight());
+  //    }
+  //    for (int i = 0; i < faSize; i++) {
+  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+  //          , i+1, fa.defender[i].getName(), fa.defender[i].getNation(), fa.defender[i].getAge()
+  //          ,fa.defender[i].getHeight(), fa.defender[i].getWeight());
+  //    }
+  //    System.out.printf("\n--------------------\n");
+  //  }
 
   private LeagueTeam findByNo(int No) {
     Object[] list = this.list.toArray();
@@ -377,5 +379,45 @@ public class TeamSetting {
     }
     return null;
   }
+
+  public void redyLeague() {
+
+    int versus = 8;
+    LeagueTeam[] aTeam = new LeagueTeam[teamSize];
+    LeagueTeam[] bTeam = new LeagueTeam[teamSize];
+
+    for (int y = 0; y < teamSize; y++) {
+      league = findByNo(nums[y]);
+      league = findByNo(nums[y]);
+      aTeam[y] = league;
+      bTeam[y] = league;
+    }
+
+    for (int i1 = 0; i1 < versus; i1++) {
+      int temp = r.nextInt(teamSize);
+      nums[i1] = temp;
+
+      for (int o = 0; o < i1; o++) {
+        if (nums[o] == temp) {
+          i1--;
+          break;
+        }
+      }
+    }
+
+    for (int o = 0; o < versus; o++) {
+      System.out.printf("\n[ %s ]", aTeam[nums[o]].getTeamName());
+      for (int p = 0; p < teamSize; p++) {
+        if (aTeam[nums[o]].getTeamName().equalsIgnoreCase(bTeam[nums[p]].getTeamName())) {
+          continue;
+        } else {
+          System.out.printf(" vs [ %s ]\n", bTeam[nums[p]].getTeamName());
+          break;
+        }
+      }
+    }
+  }
+
+
 
 }

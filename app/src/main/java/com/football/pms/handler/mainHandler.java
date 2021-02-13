@@ -22,7 +22,7 @@ public class mainHandler {
             + "\n."
             + "\n완료되었습니다.\n");
         setting.makeTeam(tName, cName);
-        setting.makeFAplayer();
+        //        setting.makeFAplayer();
 
         menu();
       } else if (c.equalsIgnoreCase("n")) {
@@ -39,7 +39,7 @@ public class mainHandler {
             + "\n1.내 팀정보"
             + "\n2.팀 선수정보"
             + "\n3.타팀 정보"
-            + "\n4.FA 리스트"
+            + "\n4.경기확인"
             + "\n> ");
         switch (c2) {
           case 0:
@@ -63,27 +63,16 @@ public class mainHandler {
             continue;
           case 3:
             setting.otherTeam();
-            setting.otherTeamInfo();
             continue;
+            //          case 4:
+            //            setting.FAplayerList();
+            //            continue;
           case 4:
-            setting.FAplayerList();
+            setting.redyLeague();
             continue;
-
         }
         break;
       }
-  }
-
-
-  private LeagueTeam findByNo(int No) {
-    Object[] list = this.list.toArray();
-    for (Object obj : list) {
-      LeagueTeam b = (LeagueTeam) obj;
-      if (b.getTeamCode() == No) {
-        return b;
-      }
-    }
-    return null;
   }
 
 }
