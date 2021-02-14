@@ -1,14 +1,12 @@
 package com.football.pms;
 
 import com.football.pms.handler.mainHandler;
-import com.football.pms.util.List;
 import com.football.pms.util.Prompt;
 
 public class Main {
 
   public static void main(String[] args) {
 
-    List list = new List();
     mainHandler play = new mainHandler();
 
     while(true) {
@@ -22,7 +20,7 @@ public class Main {
         case "2":
           break;
         default : 
-          System.out.printf("\n<<<<<다시 입력해 주세요.>>>>>\n");
+          System.out.printf("\n<<<<<다시 입력해 주세요>>>>>\n");
           continue;
       }
       System.out.println("[ GoodBye! ]");

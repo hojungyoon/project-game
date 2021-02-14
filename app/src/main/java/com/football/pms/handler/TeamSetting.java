@@ -1,8 +1,10 @@
 package com.football.pms.handler;
 
+import java.util.ArrayList;
 import java.util.Random;
 import com.football.pms.domain.FA;
 import com.football.pms.domain.LeagueTeam;
+import com.football.pms.domain.TeamDecending;
 import com.football.pms.domain.fieldplay.Defender;
 import com.football.pms.domain.fieldplay.Kipper;
 import com.football.pms.domain.fieldplay.Midfielder;
@@ -25,13 +27,16 @@ public class TeamSetting {
   private int teamDefender = 6;
   private int teamKipper = 2;
 
+  private int day = 1;
+
   private List list = new List();
   //  private List FAlist = new List();
   Random r;
-  int[] nums = new int[teamSize];
+  int[] nums;
 
   public void makeTeam(String tName, String tCoach) {
     r = new Random();
+    nums = new int[teamSize];
 
     for (int i1 = 0; i1 < nums.length; i1++) {
       int temp = r.nextInt(teamSize);
@@ -49,7 +54,7 @@ public class TeamSetting {
       league = new LeagueTeam();
       league.setTeamCode(this.i);
       league.setTeamName(ProfileSetting.makeTeamName(nums[this.i]));
-      league.setCoach(ProfileSetting.coachName(nums[this.i]));
+      league.setCoachName(ProfileSetting.coachName(nums[this.i]));
 
 
       Striker[] sta = new Striker[teamStriker];
@@ -60,7 +65,7 @@ public class TeamSetting {
         st.setAge(ProfileSetting.age()); 
         st.setHeight(ProfileSetting.height()); 
         st.setWeight(ProfileSetting.weight()); 
-        st.setPosition("Striker");
+        st.setPosition("St");
         st.setNation(ProfileSetting.nationality());
         st.setDismissal(0);
         st.setGoal(0);
@@ -78,7 +83,7 @@ public class TeamSetting {
         md.setAge(ProfileSetting.age()); 
         md.setHeight(ProfileSetting.height()); 
         md.setWeight(ProfileSetting.weight()); 
-        md.setPosition("Midfielder");
+        md.setPosition("Mid");
         md.setNation(ProfileSetting.nationality());
         md.setDismissal(0);
         md.setGoal(0);
@@ -96,7 +101,7 @@ public class TeamSetting {
         df.setAge(ProfileSetting.age()); 
         df.setHeight(ProfileSetting.height()); 
         df.setWeight(ProfileSetting.weight()); 
-        df.setPosition("Defender");
+        df.setPosition("Def");
         df.setNation(ProfileSetting.nationality());
         df.setDismissal(0);
         df.setGoal(0);
@@ -114,7 +119,7 @@ public class TeamSetting {
         kp.setAge(ProfileSetting.age()); 
         kp.setHeight(kipperHei()); 
         kp.setWeight(ProfileSetting.weight()); 
-        kp.setPosition("Kipper");
+        kp.setPosition("Kip");
         kp.setNation(ProfileSetting.nationality());
 
         kpa[i] = kp;
@@ -127,7 +132,7 @@ public class TeamSetting {
 
       league = findByNo(0);
       league.setTeamName(tName);
-      league.setCoach(tCoach);
+      league.setCoachName(tCoach);
     }
   }
 
@@ -147,9 +152,9 @@ public class TeamSetting {
     league = findByNo(0);
 
     System.out.printf("팀 이름 : %s\n", league.getTeamName());
-    System.out.printf("팀 감독 : %s\n", league.getCoach());
+    System.out.printf("팀 감독 : %s\n", league.getCoachName());
     System.out.printf("전   적 : %d승 %d무 %d패\n"
-        , league.getWin(), league.getLoose(), league.getDraw());
+        , league.getWin(), league.getDraw(), league.getLoose());
     System.out.printf("리그우승 : %d회\n", league.getLeagueWin());
     System.out.printf("<<<<< 선수목록 >>>>>\n");
     System.out.printf("1. 공격수\n");
@@ -248,8 +253,8 @@ public class TeamSetting {
   public void otherTeam() {
     for (int h = 1; h < teamSize; h++) {
       league = findByNo(h);
-      System.out.printf("\n%d. %s (%d승 %d무 %d패)\n"
-          , h, league.getTeamName(), league.getWin(), league.getLoose(), league.getDraw());
+      System.out.printf("\n%d. %s\n"
+          , h, league.getTeamName());
     }
     int no = Prompt.inputInt("\n(뒤로가기 : 99)> ");
     if (no == 99) {
@@ -259,7 +264,9 @@ public class TeamSetting {
 
       System.out.printf("\n[  팀 정보  ]\n");
       System.out.printf("팀 이름 : %s\n", league.getTeamName());
-      System.out.printf("팀 감독 : %s\n", league.getCoach());
+      System.out.printf("팀 감독 : %s\n", league.getCoachName());
+      System.out.printf("전   적 : %d승 %d무 %d패\n"
+          , league.getWin(), league.getDraw(), league.getLoose());
       System.out.printf("<<<<< 선수목록 >>>>>\n");
       System.out.printf("1. 공격수\n");
       for (int i = 0; i < teamStriker; i++) {
@@ -382,27 +389,143 @@ public class TeamSetting {
 
   public void playLeague() {
     r = new Random();
+    nums = new int[teamSize];
 
-    for (int i1 = 0; i1 < nums.length; i1++) {
+    for (int y = 0; y < nums.length; y++) {
       int temp = r.nextInt(teamSize);
-      nums[i1] = temp;
+      nums[y] = temp;
 
-      for (int o = 0; o < i1; o++) {
+      for (int o = 0; o < y; o++) {
         if (nums[o] == temp) {
-          i1--;
+          y--;
           break;
         }
       }
     }
 
-    for (int o = 0; o < (teamSize >> 1); o++) {
+    System.out.printf("\n<<<<< %d라운드 경기 >>>>>\n", day);
+
+    for (int o = 0; o < teamSize / 2; o++) {
       league = findByNo(nums[o]);
       System.out.printf("\n[ %s ]",league.getTeamName());
       league = findByNo(nums[o + 8]);
       System.out.printf(" vs [ %s ]\n", league.getTeamName());
     }
+    String play = Prompt.inputString("\n경기를 시작하겠습니까? [y/N]> ");
+    if (play.equalsIgnoreCase("y")) {
+      System.out.printf("\n============================================="
+          + "\n\t    [경기를 시작합니다!]\n"
+          + "=============================================\n");
+    } else {
+      return;
+    }
+
+    int o = 0;
+    while (o < (teamSize / 2)) {
+      int homeTeam = 0, awayTeam = 0;
+
+      for (int s = 0; s < 5; s++) {
+        Random r2 = new Random();
+        int home = r2.nextInt(2);
+
+        Random r3 = new Random();
+        int away = r3.nextInt(2);
+
+        if (home == away) {
+          continue;
+        } else if(home > away) {
+          league = findByNo(nums[o]);
+          homeTeam += 1;
+
+          int temp = r.nextInt(10);
+          if(temp >= 0 && temp <= 4) {
+            int st = r.nextInt(teamStriker);
+            league.striker[st].setGoal(league.striker[st].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.striker[st].getName(), league.striker[st].getPosition());
+          } else if(temp >= 5 && temp <= 8) {
+            int mid = r.nextInt(teamMidfielder);
+            league.midfielder[mid].setGoal(league.midfielder[mid].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.midfielder[mid].getName(), league.midfielder[mid].getPosition());
+          } else {
+            int def = r.nextInt(teamDefender);
+            league.defender[def].setGoal(league.midfielder[def].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.defender[def].getName(), league.defender[def].getPosition());
+          }
+
+
+        } else if(home < away) {
+          league = findByNo(nums[o + 8]);
+          awayTeam += 1;
+
+          int temp = r.nextInt(10);
+          if(temp >= 0 && temp <= 4) {
+            int st = r.nextInt(teamStriker);
+            league.striker[st].setGoal(league.striker[st].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.striker[st].getName(), league.striker[st].getPosition());
+          } else if(temp >= 5 && temp <= 8) {
+            int mid = r.nextInt(teamMidfielder);
+            league.midfielder[mid].setGoal(league.midfielder[mid].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.midfielder[mid].getName(), league.midfielder[mid].getPosition());
+          } else {
+            int def = r.nextInt(teamDefender);
+            league.defender[def].setGoal(league.midfielder[def].getGoal() + 1);
+            System.out.printf("\n[%s] - %s(%s) + 1"
+                , league.getTeamName(), league.defender[def].getName(), league.defender[def].getPosition());
+          }
+
+        }
+      }
+
+      if (homeTeam > awayTeam) {
+        league = findByNo(nums[o]);
+        league.setWin(league.getWin() + 1);
+
+        league = findByNo(nums[o + 8]);
+        league.setLoose(league.getLoose() + 1);
+
+      } else if (homeTeam < awayTeam) {
+        league = findByNo(nums[o]);
+        league.setLoose(league.getLoose() + 1);
+
+        league = findByNo(nums[o + 8]);
+        league.setWin(league.getWin()+ 1);
+
+      } else if (homeTeam == awayTeam) {
+        league = findByNo(nums[o]);
+        league.setDraw(league.getDraw()+ 1);
+
+        league = findByNo(nums[o + 8]);
+        league.setDraw(league.getDraw()+ 1);
+      }
+
+      league = findByNo(nums[o]);
+      System.out.printf(String.format("\n[ %s ] %d : ", league.getTeamName(), homeTeam));
+      league = findByNo(nums[o + 8]);
+      System.out.printf(String.format("%d [ %s ]\n", awayTeam, league.getTeamName()));
+
+      o++;
+      System.out.println("=============================================");
+    }
+    System.out.printf("\n<<<<< 경기종료 >>>>>\n");
+    day++;
   }
 
 
+  public void ranking() {
+    ArrayList<LeagueTeam> rank = new ArrayList<LeagueTeam>();
+    for (int r = 0; r < teamSize; r++) {
+      league = findByNo(r);
+      rank.add(league);
+    }
+
+    TeamDecending team = new TeamDecending();
+
+
+  }
 
 }

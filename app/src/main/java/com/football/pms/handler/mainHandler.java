@@ -1,13 +1,11 @@
 package com.football.pms.handler;
 
 import com.football.pms.domain.LeagueTeam;
-import com.football.pms.util.List;
 import com.football.pms.util.Prompt;
 
 public class mainHandler {
   LeagueTeam league;
 
-  private List list = new List();
   TeamSetting setting = new TeamSetting();
 
   public void makeMyTeam() {
@@ -40,6 +38,7 @@ public class mainHandler {
             + "\n2.팀 선수정보"
             + "\n3.타팀 정보"
             + "\n4.경기확인"
+            + "\n5.순위확인"
             + "\n> ");
         switch (c2) {
           case 0:

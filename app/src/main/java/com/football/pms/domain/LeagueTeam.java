@@ -18,6 +18,13 @@ public class LeagueTeam {
   int draw;
   int leagueWin;
 
+
+  public String getCoachName() {
+    return coachName;
+  }
+  public void setCoachName(String coachName) {
+    this.coachName = coachName;
+  }
   public int getTeamCode() {
     return teamCode;
   }
@@ -30,12 +37,7 @@ public class LeagueTeam {
   public void setTeamName(String teamName) {
     this.teamName = teamName;
   }
-  public String getCoach() {
-    return coachName;
-  }
-  public void setCoach(String coach) {
-    this.coachName = coach;
-  }
+
   public Striker[] getStriker() {
     return striker;
   }
@@ -83,6 +85,11 @@ public class LeagueTeam {
   }
   public void setLeagueWin(int leagueWin) {
     this.leagueWin = leagueWin;
+  }
+
+  @Override
+  public String toString() {
+    return "[%s]" + teamName + " %d" + win + " %d" + draw + " %d" + loose;
   }
 
 }
