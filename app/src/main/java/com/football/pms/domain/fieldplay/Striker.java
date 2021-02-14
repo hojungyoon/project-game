@@ -9,7 +9,14 @@ public class Striker {
   String position;
   int dismissal;
   int goal;
+  int assist;
 
+  public int getAssist() {
+    return assist;
+  }
+  public void setAssist(int assist) {
+    this.assist = assist;
+  }
   public String getName() {
     return name;
   }

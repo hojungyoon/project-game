@@ -33,12 +33,12 @@ public class mainHandler {
   public void menu() {
     menu:
       while(true) {
-        int c2 = Prompt.inputInt("\n0.게임종료"
-            + "\n1.내 팀정보"
-            + "\n2.팀 선수정보"
-            + "\n3.타팀 정보"
-            + "\n4.경기확인"
-            + "\n5.순위확인"
+        int c2 = Prompt.inputInt("\n[_____Play Menu_____]"
+            + "\n0.게임종료"
+            + "\n1.팀 및 선수정보"
+            + "\n2.타 팀 정보"
+            + "\n3.경기진행"
+            + "\n4.순위확인"
             + "\n> ");
         switch (c2) {
           case 0:
@@ -55,19 +55,19 @@ public class mainHandler {
               }
             }
           case 1:
-            setting.teamInfo();
-            continue;
-          case 2:
             setting.privacy();
             continue;
-          case 3:
+          case 2:
             setting.otherTeam();
             continue;
             //          case 4:
             //            setting.FAplayerList();
             //            continue;
-          case 4:
+          case 3:
             setting.playLeague();
+            continue;
+          case 4:
+            setting.ranking();
             continue;
         }
         break;

@@ -17,8 +17,35 @@ public class LeagueTeam {
   int loose;
   int draw;
   int leagueWin;
+  int scores;
+  int point;
+  int plusPoint;
+  int minusPoint;
 
-
+  public int getPlusPoint() {
+    return plusPoint;
+  }
+  public void setPlusPoint(int plusPoint) {
+    this.plusPoint = plusPoint;
+  }
+  public int getMinusPoint() {
+    return minusPoint;
+  }
+  public void setMinusPoint(int minusPoint) {
+    this.minusPoint = minusPoint;
+  }
+  public int getScores() {
+    return scores;
+  }
+  public void setScores(int scores) {
+    this.scores = scores;
+  }
+  public int getPoint() {
+    return point;
+  }
+  public void setPoint(int point) {
+    this.point = point;
+  }
   public String getCoachName() {
     return coachName;
   }
@@ -89,7 +116,7 @@ public class LeagueTeam {
 
   @Override
   public String toString() {
-    return "[%s]" + teamName + " %d" + win + " %d" + draw + " %d" + loose;
+    return win + " 승  " + draw + " 무  " + loose + " 패  /  "
+        + "승점 " + point + "  득실차 " + scores + " / [" + teamName + "]";
   }
-
 }

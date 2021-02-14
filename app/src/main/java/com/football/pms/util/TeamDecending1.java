@@ -1,0 +1,15 @@
+package com.football.pms.util;
+
+import java.util.Comparator;
+import com.football.pms.domain.LeagueTeam;
+
+public class TeamDecending1 implements Comparator<LeagueTeam> {
+
+  @Override
+  public int compare(LeagueTeam o1, LeagueTeam o2) {
+    Integer temp1 = o1.getPoint();
+    Integer temp2 = o2.getPoint();
+    return temp2.compareTo(temp1);
+  }
+
+}

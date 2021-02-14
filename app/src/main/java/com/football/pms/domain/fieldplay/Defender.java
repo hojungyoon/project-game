@@ -11,6 +11,12 @@ public class Defender {
   int goal;
   int assist;
 
+  public int getAssist() {
+    return assist;
+  }
+  public void setAssist(int assist) {
+    this.assist = assist;
+  }
   public String getName() {
     return name;
   }

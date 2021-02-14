@@ -61,14 +61,14 @@ public class ProfileSetting {
     return t;
   }
 
-  public static int weight() {
+  public static int weight(int height) {
     Random kg = new Random();
-    int k;
-    if (height() > 164 || height()< 175) {
+    int k = 0;
+    if (height > 164 && height <= 175) {
       k = kg.nextInt(15)+60;
-    } else if (height() > 175 || height()< 185) {
+    } else if (height > 175 && height <= 185) {
       k = kg.nextInt(15)+70;
-    } else {
+    } else if (height > 185 && height <= 200){
       k = kg.nextInt(15)+80;
     }
 
@@ -85,7 +85,7 @@ public class ProfileSetting {
 
   public static String nationality () {
     Random n = new Random();
-    String[] nationality = { "잉글랜드", "이탈리아", "미국", "벨기에", " 스페인", "독일"
+    String[] nationality = { "잉글랜드", "이탈리아", "미국", "벨기에", "스페인", "독일"
         , "오스트리아", "포르투갈", "아이슬란드", "캐나다", "스위스" };
     int i = n.nextInt(nationality.length);
 
