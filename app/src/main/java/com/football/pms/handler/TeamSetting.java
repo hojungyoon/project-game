@@ -33,6 +33,7 @@ public class TeamSetting {
 
   private List list = new List();
   //  private List FAlist = new List();
+  ArrayList<String> matchRecodes = new ArrayList<String>();
   Random r;
   int[] nums;
 
@@ -169,7 +170,8 @@ public class TeamSetting {
         + "2. 미드필더\n"
         + "3. 수비수\n"
         + "4. 골키퍼\n"
-        + "5. 뒤로가기\n"
+        + "5. 최근 5경기"
+        + "6. 뒤로가기\n"
         + "> ");
     switch (c) {
       case 1:
@@ -234,6 +236,10 @@ public class TeamSetting {
         }
         break;
       case 5:
+        for (int o = matchRecodes.size(); o > matchRecodes.size() - 5; o--) {
+          System.out.printf("%s\n", matchRecodes.get(o));
+        }
+      case 6:
         return;
     }
     return;
@@ -261,21 +267,21 @@ public class TeamSetting {
       System.out.printf("<<<<< 선수목록 >>>>>\n");
       System.out.printf("1. 공격수\n");
       for (int i = 0; i < teamStriker; i++) {
-        System.out.printf("> %d.G/%d.A - %s (%d)\n"
+        System.out.printf("> %d G/%d A - %s (%d)\n"
             , league.striker[i].getGoal(), league.striker[i].getAssist()
             , league.striker[i].getName(), league.striker[i].getAge());
       }
       System.out.println();
       System.out.printf("2. 미드필더\n");
       for (int i = 0; i < teamMidfielder; i++) {
-        System.out.printf("> %d.G/%d.A - %s (%d)\n"
+        System.out.printf("> %d G/%d A - %s (%d)\n"
             , league.midfielder[i].getGoal(), league.midfielder[i].getAssist()
             , league.midfielder[i].getName(), league.midfielder[i].getAge());
       }
       System.out.println();
       System.out.printf("3. 수비수\n");
       for (int i = 0; i < teamDefender; i++) {
-        System.out.printf("> %d.G/%d.A - %s (%d)\n"
+        System.out.printf("> %d G/%d A - %s (%d)\n"
             , league.defender[i].getGoal(), league.defender[i].getAssist()
             , league.defender[i].getName(), league.defender[i].getAge());
       }
@@ -287,94 +293,6 @@ public class TeamSetting {
       return;
     }
   }
-
-  //  private int faSize = 5;
-  //
-  //  public void makeFAplayer() {
-  //
-  //    Striker[] faSta = new Striker[faSize];
-  //    Midfielder[] faMda = new Midfielder[faSize];
-  //    Defender[] faDfa = new Defender[faSize];
-  //
-  //    for (int i = 0; i < faSize; i++) {
-  //      Striker fast = new Striker();
-  //      fast.setName(ProfileSetting.makeRanName()); 
-  //      fast.setAge(ProfileSetting.age()); 
-  //      fast.setHeight(ProfileSetting.height()); 
-  //      fast.setWeight(ProfileSetting.weight()); 
-  //      fast.setPosition("Striker");
-  //      fast.setNation(ProfileSetting.nationality());
-  //      fast.setDismissal(0);
-  //      fast.setGoal(0);
-  //
-  //      faSta[i] = fast;
-  //      fa.setStriker(faSta);
-  //
-  //      Midfielder md = new Midfielder();
-  //      md.setName(ProfileSetting.makeRanName()); 
-  //      md.setAge(ProfileSetting.age()); 
-  //      md.setHeight(ProfileSetting.height()); 
-  //      md.setWeight(ProfileSetting.weight()); 
-  //      md.setPosition("Midfielder");
-  //      md.setNation(ProfileSetting.nationality());
-  //      md.setDismissal(0);
-  //      md.setGoal(0);
-  //
-  //      faMda[i] = md;
-  //      fa.setMidfielder(faMda);
-  //
-  //      Defender df = new Defender();
-  //      df.setName(ProfileSetting.makeRanName()); 
-  //      df.setAge(ProfileSetting.age()); 
-  //      df.setHeight(ProfileSetting.height()); 
-  //      df.setWeight(ProfileSetting.weight()); 
-  //      df.setPosition("Defender");
-  //      df.setNation(ProfileSetting.nationality());
-  //      df.setDismissal(0);
-  //      df.setGoal(0);
-  //
-  //      faDfa[i] = df;
-  //      fa.setDefender(faDfa);
-  //    }
-  //
-  //    Kipper[] faKpa = new Kipper[teamKipper];
-  //
-  //    for (int i = 0; i < teamKipper; i++) {
-  //      Kipper kp = new Kipper();
-  //      kp.setName(ProfileSetting.makeRanName()); 
-  //      kp.setAge(ProfileSetting.age()); 
-  //      kp.setHeight(kipperHei()); 
-  //      kp.setWeight(ProfileSetting.weight()); 
-  //      kp.setPosition("Kipper");
-  //      kp.setNation(ProfileSetting.nationality());
-  //
-  //      faKpa[i] = kp;
-  //      fa.setKipper(faKpa);
-  //    }
-  //
-  //    FAlist.add(fa);
-  //  }
-  //
-  //  public void FAplayerList() {
-  //
-  //    System.out.printf("\n<<<<< FA선수 >>>>>\n");
-  //    for (int i = 0; i < faSize; i++) {
-  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-  //          , i+1, fa.striker[i].getName(), fa.striker[i].getNation(), fa.striker[i].getAge()
-  //          ,fa.striker[i].getHeight(), fa.striker[i].getWeight());
-  //    }
-  //    for (int i = 0; i < faSize; i++) {
-  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-  //          , i+1, fa.midfielder[i].getName(), fa.midfielder[i].getNation(), fa.midfielder[i].getAge()
-  //          ,fa.midfielder[i].getHeight(), fa.midfielder[i].getWeight());
-  //    }
-  //    for (int i = 0; i < faSize; i++) {
-  //      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
-  //          , i+1, fa.defender[i].getName(), fa.defender[i].getNation(), fa.defender[i].getAge()
-  //          ,fa.defender[i].getHeight(), fa.defender[i].getWeight());
-  //    }
-  //    System.out.printf("\n--------------------\n");
-  //  }
 
   private LeagueTeam findByNo(int No) {
     Object[] list = this.list.toArray();
@@ -691,11 +609,25 @@ public class TeamSetting {
         league.setMinusPoint(league.getMinusPoint() - homeTeam);
         league.setScores(league.getPlusPoint() + league.getMinusPoint());
       }
+      String aa = null;
+      String bb = null;
 
       league = findByNo(nums[o]);
       System.out.printf(String.format("\n\n[ %s ] %d : ", league.getTeamName(), homeTeam));
+
+      if(league.getTeamCode() == 0) {
+        aa = String.format("\n[ %s ] %d : ", league.getTeamName(), homeTeam);
+      }
+
       league = findByNo(nums[o + awayDivision]);
       System.out.printf(String.format("%d [ %s ]\n", awayTeam, league.getTeamName()));
+
+      if(league.getTeamCode() == 0) {
+        bb = String.format("%d [ %s ]\n", awayTeam, league.getTeamName());
+      }
+
+      matchRecodes.add(aa.concat(bb));
+
 
       System.out.println("=============================================");
     }
@@ -703,7 +635,6 @@ public class TeamSetting {
         + "=============================================\n");
     day++;
   }
-
 
   public void ranking() {
     ArrayList<LeagueTeam> rank = new ArrayList<LeagueTeam>();
@@ -718,9 +649,191 @@ public class TeamSetting {
     Collections.sort(rank, team1);
 
     for (LeagueTeam league : rank) {
-      System.out.printf("[ %d위 ]\n%s\n", rankNum, league);
+      System.out.printf("[ %d위 ]\n> %s\n", rankNum, league);
       rankNum++;
     }
   }
 
+  public void personalGoalRank() {
+    ArrayList<String> gRank = new ArrayList<String>();
+
+    String comma1 = " Goal / ";
+    String comma2 = " - [ ";
+    String comma3 = " ]";
+    String comma4 = "(";
+    String comma5 = ")";
+    String teamName = null;
+    String goal = null;
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamStriker; p++) {
+        goal = Integer.toString(league.striker[p].getGoal()) + comma1
+            + league.striker[p].getName() + comma4 + league.striker[p].getPosition() + comma5 + teamName;
+
+        gRank.add(goal);
+      }
+    }
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamMidfielder; p++) {
+        goal = Integer.toString(league.midfielder[p].getGoal()) + comma1
+            + league.midfielder[p].getName() + comma4 + league.midfielder[p].getPosition() + comma5 + teamName;
+
+        gRank.add(goal);
+      }
+    }
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamDefender; p++) {
+        goal = Integer.toString(league.defender[p].getGoal()) + comma1
+            + league.defender[p].getName() + comma4 + league.defender[p].getPosition() + comma5 + teamName;
+
+        gRank.add(goal);
+      }
+    }
+    Collections.sort(gRank, Collections.reverseOrder());
+    for (int o = 0; o < teamSize; o++) {
+      System.out.printf("[ %d위 ]\n> %s\n", o + 1, gRank.get(o));
+    }
+  }
+
+  public void personalAssistRank() {
+    ArrayList<String> aRank = new ArrayList<String>();
+
+    String comma1 = " Assist / ";
+    String comma2 = " - [ ";
+    String comma3 = " ]";
+    String comma4 = "(";
+    String comma5 = ")";
+    String teamName = null;
+    String goal = null;
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamStriker; p++) {
+        goal = Integer.toString(league.striker[p].getAssist()) + comma1
+            + league.striker[p].getName() + comma4 + league.striker[p].getPosition() + comma5 + teamName;
+
+        aRank.add(goal);
+      }
+    }
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamMidfielder; p++) {
+        goal = Integer.toString(league.midfielder[p].getAssist()) + comma1
+            + league.midfielder[p].getName() + comma4 + league.midfielder[p].getPosition() + comma5 + teamName;
+
+        aRank.add(goal);
+      }
+    }
+    for (int o = 0; o < teamSize; o++) {
+      league = findByNo(o);
+      teamName = comma2 + league.getTeamName() + comma3;
+      for (int p = 0; p < teamDefender; p++) {
+        goal = Integer.toString(league.defender[p].getAssist()) + comma1
+            + league.defender[p].getName() + comma4 + league.defender[p].getPosition() + comma5 + teamName;
+
+        aRank.add(goal);
+      }
+    }
+    Collections.sort(aRank, Collections.reverseOrder());
+    for (int o = 0; o < teamSize; o++) {
+      System.out.printf("[ %d위 ]\n> %s\n", o + 1, aRank.get(o));
+    }
+  }
+
+
 }
+
+
+//  private int faSize = 5;
+//
+//  public void makeFAplayer() {
+//
+//    Striker[] faSta = new Striker[faSize];
+//    Midfielder[] faMda = new Midfielder[faSize];
+//    Defender[] faDfa = new Defender[faSize];
+//
+//    for (int i = 0; i < faSize; i++) {
+//      Striker fast = new Striker();
+//      fast.setName(ProfileSetting.makeRanName()); 
+//      fast.setAge(ProfileSetting.age()); 
+//      fast.setHeight(ProfileSetting.height()); 
+//      fast.setWeight(ProfileSetting.weight()); 
+//      fast.setPosition("Striker");
+//      fast.setNation(ProfileSetting.nationality());
+//      fast.setDismissal(0);
+//      fast.setGoal(0);
+//
+//      faSta[i] = fast;
+//      fa.setStriker(faSta);
+//
+//      Midfielder md = new Midfielder();
+//      md.setName(ProfileSetting.makeRanName()); 
+//      md.setAge(ProfileSetting.age()); 
+//      md.setHeight(ProfileSetting.height()); 
+//      md.setWeight(ProfileSetting.weight()); 
+//      md.setPosition("Midfielder");
+//      md.setNation(ProfileSetting.nationality());
+//      md.setDismissal(0);
+//      md.setGoal(0);
+//
+//      faMda[i] = md;
+//      fa.setMidfielder(faMda);
+//
+//      Defender df = new Defender();
+//      df.setName(ProfileSetting.makeRanName()); 
+//      df.setAge(ProfileSetting.age()); 
+//      df.setHeight(ProfileSetting.height()); 
+//      df.setWeight(ProfileSetting.weight()); 
+//      df.setPosition("Defender");
+//      df.setNation(ProfileSetting.nationality());
+//      df.setDismissal(0);
+//      df.setGoal(0);
+//
+//      faDfa[i] = df;
+//      fa.setDefender(faDfa);
+//    }
+//
+//    Kipper[] faKpa = new Kipper[teamKipper];
+//
+//    for (int i = 0; i < teamKipper; i++) {
+//      Kipper kp = new Kipper();
+//      kp.setName(ProfileSetting.makeRanName()); 
+//      kp.setAge(ProfileSetting.age()); 
+//      kp.setHeight(kipperHei()); 
+//      kp.setWeight(ProfileSetting.weight()); 
+//      kp.setPosition("Kipper");
+//      kp.setNation(ProfileSetting.nationality());
+//
+//      faKpa[i] = kp;
+//      fa.setKipper(faKpa);
+//    }
+//
+//    FAlist.add(fa);
+//  }
+//
+//  public void FAplayerList() {
+//
+//    System.out.printf("\n<<<<< FA선수 >>>>>\n");
+//    for (int i = 0; i < faSize; i++) {
+//      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+//          , i+1, fa.striker[i].getName(), fa.striker[i].getNation(), fa.striker[i].getAge()
+//          ,fa.striker[i].getHeight(), fa.striker[i].getWeight());
+//    }
+//    for (int i = 0; i < faSize; i++) {
+//      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+//          , i+1, fa.midfielder[i].getName(), fa.midfielder[i].getNation(), fa.midfielder[i].getAge()
+//          ,fa.midfielder[i].getHeight(), fa.midfielder[i].getWeight());
+//    }
+//    for (int i = 0; i < faSize; i++) {
+//      System.out.printf("\n%d. %s\n  - 국적 : %s, %d세, %dcm %dkg"
+//          , i+1, fa.defender[i].getName(), fa.defender[i].getNation(), fa.defender[i].getAge()
+//          ,fa.defender[i].getHeight(), fa.defender[i].getWeight());
+//    }
+//    System.out.printf("\n--------------------\n");
+//  }

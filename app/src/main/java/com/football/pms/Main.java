@@ -10,7 +10,7 @@ public class Main {
     mainHandler play = new mainHandler();
 
     while(true) {
-      System.out.println("[ 운빨 축구 게임 ]");
+      System.out.println("[ Soccer ]");
       String i = Prompt.inputString("1. Start"
           + "\n2. exit"
           + "\n> ");

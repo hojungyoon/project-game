@@ -39,6 +39,7 @@ public class mainHandler {
             + "\n2.타 팀 정보"
             + "\n3.경기진행"
             + "\n4.순위확인"
+            + "\n5.리그개인순위"
             + "\n> ");
         switch (c2) {
           case 0:
@@ -68,6 +69,19 @@ public class mainHandler {
             continue;
           case 4:
             setting.ranking();
+            continue;
+          case 5:
+            int c3 = Prompt.inputInt("\n1.다득점 순위\n2.어시스트 순위\n3.뒤로가기\n> ");
+            switch(c3) {
+              case 1:
+                setting.personalGoalRank();
+                break;
+              case 2:
+                setting.personalAssistRank();
+                break;
+              case 3:
+                break;
+            }
             continue;
         }
         break;
