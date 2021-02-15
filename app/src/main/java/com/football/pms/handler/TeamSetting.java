@@ -33,7 +33,7 @@ public class TeamSetting {
 
   private List list = new List();
   //  private List FAlist = new List();
-  ArrayList<String> matchRecodes = new ArrayList<String>();
+  String[] matchRecodes = new String[5];
   Random r;
   int[] nums;
 
@@ -170,8 +170,7 @@ public class TeamSetting {
         + "2. 미드필더\n"
         + "3. 수비수\n"
         + "4. 골키퍼\n"
-        + "5. 최근 5경기"
-        + "6. 뒤로가기\n"
+        + "5. 뒤로가기\n"
         + "> ");
     switch (c) {
       case 1:
@@ -236,10 +235,6 @@ public class TeamSetting {
         }
         break;
       case 5:
-        for (int o = matchRecodes.size(); o > matchRecodes.size() - 5; o--) {
-          System.out.printf("%s\n", matchRecodes.get(o));
-        }
-      case 6:
         return;
     }
     return;
@@ -350,14 +345,21 @@ public class TeamSetting {
       int[] timeS = new int[chance];
 
       for (int z = 0; z < chance; z++) {
-        int m = r.nextInt(96);
-        timeM[z] = m;
-
         int s = r.nextInt(60);
         timeS[z] = s;
       }
+
+      for (int z = 0; z < chance; z++) {
+        int m = r.nextInt(96);
+        timeM[z] = m;
+        for (int x = 0; x < z; x++) {
+          if (timeM[x] == m) {
+            z--;
+            break;
+          }
+        }
+      }
       Arrays.sort(timeM);
-      Arrays.sort(timeS);
 
       int chanceNum = 0;
       int percent = 10;
@@ -609,25 +611,14 @@ public class TeamSetting {
         league.setMinusPoint(league.getMinusPoint() - homeTeam);
         league.setScores(league.getPlusPoint() + league.getMinusPoint());
       }
-      String aa = null;
-      String bb = null;
 
       league = findByNo(nums[o]);
-      System.out.printf(String.format("\n\n[ %s ] %d : ", league.getTeamName(), homeTeam));
-
-      if(league.getTeamCode() == 0) {
-        aa = String.format("\n[ %s ] %d : ", league.getTeamName(), homeTeam);
-      }
+      String a = String.format("[ %s ] %d : ", league.getTeamName(), homeTeam);
 
       league = findByNo(nums[o + awayDivision]);
-      System.out.printf(String.format("%d [ %s ]\n", awayTeam, league.getTeamName()));
+      String b = String.format("%d [ %s ]", awayTeam, league.getTeamName());
 
-      if(league.getTeamCode() == 0) {
-        bb = String.format("%d [ %s ]\n", awayTeam, league.getTeamName());
-      }
-
-      matchRecodes.add(aa.concat(bb));
-
+      System.out.printf("\n%s%s\n", a, b);
 
       System.out.println("=============================================");
     }

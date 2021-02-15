@@ -21,7 +21,6 @@ public class mainHandler {
             + "\n완료되었습니다.\n");
         setting.makeTeam(tName, cName);
         //        setting.makeFAplayer();
-
         menu();
       } else if (c.equalsIgnoreCase("n")) {
         continue;
