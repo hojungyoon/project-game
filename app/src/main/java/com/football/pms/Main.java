@@ -1,13 +1,13 @@
 package com.football.pms;
 
-import com.football.pms.handler.mainHandler;
+import com.football.pms.handler.MainHandler;
 import com.football.pms.util.Prompt;
 
 public class Main {
 
   public static void main(String[] args) {
 
-    mainHandler play = new mainHandler();
+    MainHandler play = new MainHandler();
 
     while(true) {
       System.out.println("[ Soccer ]");

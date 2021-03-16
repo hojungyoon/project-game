@@ -3,7 +3,8 @@ package com.football.pms.handler;
 import com.football.pms.domain.LeagueTeam;
 import com.football.pms.util.Prompt;
 
-public class mainHandler {
+public class MainHandler {
+
   LeagueTeam league;
 
   TeamSetting setting = new TeamSetting();
@@ -14,11 +15,9 @@ public class mainHandler {
       String cName = Prompt.inputString("\n감독의 이름을 정해주세요.\n> ");
       String c = Prompt.inputString("이름으로 진행 하시겠습니까? [y/N] > ");
       if (c.equalsIgnoreCase("y")) {
-        System.out.printf("\n팀을 꾸리는 중입니다."
-            + "\n."
-            + "\n."
-            + "\n."
-            + "\n완료되었습니다.\n");
+
+        System.out.println("팀 세팅이 완료되었습니다.");
+
         setting.makeTeam(tName, cName);
         //        setting.makeFAplayer();
         menu();

@@ -35,9 +35,9 @@ public class ProfileSetting {
 
     Random randomNum = new Random();
 
-    String[] firstTeamName = { "진격의", "동네근처", "할렐루야", "소심", "동네북", "바라심경"
+    String[] firstTeamName = { " ", "동네근처", "할렐루야", "소심", "동네북", "바라심경"
         , "청양고추", "타코야끼", "콩나물", "설레발", "끼리끼리", "오합지졸", "쌈바"
-        , "전국시대", "종합병원", "가리비"};
+        , "전국시대", "종합병원", "진격의"};
     String[] SecondTeamName = { "마드리드", "유나이티드", "FC"};
 
     int r = randomNum.nextInt(SecondTeamName.length);

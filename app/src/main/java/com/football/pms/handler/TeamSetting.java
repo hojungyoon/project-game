@@ -20,7 +20,7 @@ public class TeamSetting {
   LeagueTeam league;
   FA fa = new FA(); ;
 
-  private int i = 0;
+  private int count = 0;
 
   private int teamSize = 16;
 
@@ -38,27 +38,13 @@ public class TeamSetting {
   int[] nums;
 
   public void makeTeam(String tName, String tCoach) {
-    r = new Random();
-    nums = new int[teamSize];
 
-    for (int i1 = 0; i1 < nums.length; i1++) {
-      int temp = r.nextInt(teamSize);
-      nums[i1] = temp;
-
-      for (int j = 0; j < i1; j++) {
-        if (nums[j] == temp) {
-          i1--;
-          break;
-        }
-      }
-    }
-
-    while(this.i < teamSize) {
+    while(this.count < teamSize) {
       league = new LeagueTeam();
-      league.setTeamCode(this.i);
-      league.setTeamName(ProfileSetting.makeTeamName(nums[this.i]));
-      league.setCoachName(ProfileSetting.coachName(nums[this.i]));
 
+      league.setTeamCode(this.count);
+      league.setTeamName(ProfileSetting.makeTeamName(this.count));
+      league.setCoachName(ProfileSetting.coachName(this.count));
 
       Striker[] sta = new Striker[teamStriker];
 
@@ -131,12 +117,13 @@ public class TeamSetting {
       }
 
       list.add(league);
-      i++;
+      count++;
 
-      league = findByNo(0);
-      league.setTeamName(tName);
-      league.setCoachName(tCoach);
     }
+
+    league = findByNo(0);
+    league.setTeamName(tName);
+    league.setCoachName(tCoach);
   }
 
   public int kipperHei() {
@@ -148,6 +135,20 @@ public class TeamSetting {
       }
     }
     return i;
+  }
+
+  public void TeamPlayerInfo
+  (String name, String nation, int age, int height, int weight, int assi, int goal) {
+    System.out.printf("\n  이 름  : %s"
+        + "\n  국 적  : %s"
+        + "\n  나 이  : %d세"
+        + "\n  신 장  : %dcm"
+        + "\n  몸무게 : %dkg"
+        + "\n어시스트 : %d번"
+        + "\n    골   : %d골"
+        + "\n--------------------\n"
+        , name, nation, age, height, weight, assi, goal);
+
   }
 
   public void privacy() {
@@ -175,15 +176,8 @@ public class TeamSetting {
     switch (c) {
       case 1:
         for (int i = 0; i < teamStriker; i++) {
-          System.out.printf("\n  이 름  : %s"
-              + "\n  국 적  : %s"
-              + "\n  나 이  : %d세"
-              + "\n  신 장  : %dcm"
-              + "\n  몸무게 : %dkg"
-              + "\n어시스트 : %d번"
-              + "\n    골   : %d골"
-              + "\n--------------------\n"
-              , league.striker[i].getName(), league.striker[i].getNation()
+          TeamPlayerInfo(
+              league.striker[i].getName(), league.striker[i].getNation()
               , league.striker[i].getAge(), league.striker[i].getHeight()
               , league.striker[i].getWeight(), league.striker[i].getAssist()
               , league.striker[i].getGoal());
@@ -191,15 +185,8 @@ public class TeamSetting {
         break;
       case 2:
         for (int i = 0; i < teamMidfielder; i++) {
-          System.out.printf("\n  이 름  : %s"
-              + "\n  국 적  : %s"
-              + "\n  나 이  : %d세"
-              + "\n  신 장  : %dcm"
-              + "\n  몸무게 : %dkg"
-              + "\n어시스트 : %d번"
-              + "\n    골   : %d골"
-              + "\n--------------------\n"
-              , league.midfielder[i].getName(), league.midfielder[i].getNation()
+          TeamPlayerInfo(
+              league.midfielder[i].getName(), league.midfielder[i].getNation()
               , league.midfielder[i].getAge(), league.midfielder[i].getHeight()
               , league.midfielder[i].getWeight(), league.midfielder[i].getAssist()
               , league.midfielder[i].getGoal());
@@ -207,15 +194,8 @@ public class TeamSetting {
         break;
       case 3:
         for (int i = 0; i < teamDefender; i++) {
-          System.out.printf("\n  이 름  : %s"
-              + "\n  국 적  : %s"
-              + "\n  나 이  : %d세"
-              + "\n  신 장  : %dcm"
-              + "\n  몸무게 : %dkg"
-              + "\n어시스트 : %d번"
-              + "\n    골   : %d골"
-              + "\n--------------------\n"
-              , league.defender[i].getName(), league.defender[i].getNation()
+          TeamPlayerInfo(
+              league.defender[i].getName(), league.defender[i].getNation()
               , league.defender[i].getAge(), league.defender[i].getHeight()
               , league.defender[i].getWeight(), league.defender[i].getAssist()
               , league.defender[i].getGoal());
@@ -260,33 +240,35 @@ public class TeamSetting {
           , league.getWin(), league.getDraw(), league.getLoose()
           , league.getPlusPoint(), league.getMinusPoint());
       System.out.printf("<<<<< 선수목록 >>>>>\n");
+
       System.out.printf("1. 공격수\n");
       for (int i = 0; i < teamStriker; i++) {
-        System.out.printf("> %d G/%d A - %s (%d)\n"
-            , league.striker[i].getGoal(), league.striker[i].getAssist()
+        otherTeamPlayList(
+            league.striker[i].getGoal(), league.striker[i].getAssist()
             , league.striker[i].getName(), league.striker[i].getAge());
       }
-      System.out.println();
-      System.out.printf("2. 미드필더\n");
+      System.out.printf("\n2. 미드필더\n");
       for (int i = 0; i < teamMidfielder; i++) {
-        System.out.printf("> %d G/%d A - %s (%d)\n"
-            , league.midfielder[i].getGoal(), league.midfielder[i].getAssist()
+        otherTeamPlayList(
+            league.midfielder[i].getGoal(), league.midfielder[i].getAssist()
             , league.midfielder[i].getName(), league.midfielder[i].getAge());
       }
-      System.out.println();
-      System.out.printf("3. 수비수\n");
+      System.out.printf("\n3. 수비수\n");
       for (int i = 0; i < teamDefender; i++) {
-        System.out.printf("> %d G/%d A - %s (%d)\n"
-            , league.defender[i].getGoal(), league.defender[i].getAssist()
+        otherTeamPlayList(
+            league.defender[i].getGoal(), league.defender[i].getAssist()
             , league.defender[i].getName(), league.defender[i].getAge());
       }
-      System.out.println();
-      System.out.printf("4. 골키퍼\n");
+      System.out.printf("\n4. 골키퍼\n");
       for (int i = 0; i < teamKipper; i++) {
         System.out.printf("> %s (%d)\n", league.kipper[i].getName(), league.kipper[i].getAge());
       }
       return;
     }
+  }
+
+  public void otherTeamPlayList(int goal, int assist, String name, int age) {
+    System.out.printf("> %d G/%d A - %s (%d)\n", goal, assist, name, age);
   }
 
   private LeagueTeam findByNo(int No) {
@@ -300,26 +282,34 @@ public class TeamSetting {
     return null;
   }
 
-  public void playLeague() {
-    int awayDivision = 8;
-    r = new Random();
-    nums = new int[teamSize];
+  @SuppressWarnings("unused")
+  public int[] makeRandomNumberArray(int[] nums, int size) {
+    Random r = new Random();
+    nums = new int[size];
 
-    for (int y = 0; y < nums.length; y++) {
-      int temp = r.nextInt(teamSize);
-      nums[y] = temp;
+    for (int i = 0; i < nums.length; i++) {
+      int temp = r.nextInt(size);
+      nums[i] = temp;
 
-      for (int o = 0; o < y; o++) {
-        if (nums[o] == temp) {
-          y--;
+      for (int j = 0; j < i; j++) {
+        if (nums[j] == temp) {
+          i--;
           break;
         }
       }
+      return nums;
     }
+    return null;
+  }
+
+  public void playLeague() {
+    int awayDivision = 8;
 
     System.out.printf("\n============================================="
         + "\n\t      [%d라운드 대진표]\n"
         + "=============================================\n", day);
+
+    nums = makeRandomNumberArray(nums, teamSize);
 
     for (int o = 0; o < teamSize / 2; o++) {
       league = findByNo(nums[o]);
@@ -487,7 +477,7 @@ public class TeamSetting {
             temp = r.nextInt(percent);
             if (temp >= 0 && temp <= 5) {
               int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAge(league.midfielder[mid2].getAssist() + 1);
+              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
             } else if (temp >= 6 && temp <= 8) {
@@ -495,13 +485,13 @@ public class TeamSetting {
               if (league.striker[st].getName().equals(league.striker[st2].getName())) {
                 continue;
               } else {
-                league.striker[st2].setAge(league.striker[st2].getAssist() + 1);
+                league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
                 System.out.printf("Assist.[%s] (%s)\n"
                     , league.striker[st2].getName(), league.striker[st2].getPosition());
               }
             } else {
               int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAge(league.defender[def2].getAssist() + 1);
+              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.defender[def2].getName(), league.defender[def2].getPosition());
             }
@@ -518,18 +508,18 @@ public class TeamSetting {
               if (league.midfielder[mid].getName().equals(league.midfielder[mid2].getName())) {
                 continue;
               } else {
-                league.midfielder[mid2].setAge(league.midfielder[mid2].getAssist() + 1);
+                league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
                 System.out.printf("Assist.[%s] (%s)\n"
                     , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
               }
             } else if (temp >= 6 && temp <= 8) {
               int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAge(league.striker[st2].getAssist() + 1);
+              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.striker[st2].getName(), league.striker[st2].getPosition());
             } else {
               int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAge(league.defender[def2].getAssist() + 1);
+              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.defender[def2].getName(), league.defender[def2].getPosition());
             }
@@ -543,12 +533,12 @@ public class TeamSetting {
             temp = r.nextInt(percent);
             if (temp >= 0 && temp <= 5) {
               int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAge(league.midfielder[mid2].getAssist() + 1);
+              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
             } else if (temp >= 6 && temp <= 8) {
               int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAge(league.striker[st2].getAssist() + 1);
+              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
               System.out.printf("Assist.[%s] (%s)\n"
                   , league.striker[st2].getName(), league.striker[st2].getPosition());
             } else {
@@ -556,7 +546,7 @@ public class TeamSetting {
               if (league.defender[def].getName().equals(league.defender[def2].getName())) {
                 continue;
               } else {
-                league.defender[def2].setAge(league.defender[def2].getAssist() + 1);
+                league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
                 System.out.printf("Assist.[%s] (%s)\n"
                     , league.defender[def2].getName(), league.defender[def2].getPosition());
               }
@@ -628,6 +618,12 @@ public class TeamSetting {
   }
 
   public void ranking() {
+    if (day == 1) {
+      System.out.printf("\n============================================="
+          + "\n         [경기를 먼저 진행해 주세요!]\n"
+          + "=============================================\n");
+      return;
+    }
     ArrayList<LeagueTeam> rank = new ArrayList<LeagueTeam>();
     int rankNum = 1;
 
@@ -640,7 +636,7 @@ public class TeamSetting {
     Collections.sort(rank, team1);
 
     for (LeagueTeam league : rank) {
-      System.out.printf("[ %d위 ]\n> %s\n", rankNum, league);
+      System.out.printf("[ %d위 ]> %s\n", rankNum, league);
       rankNum++;
     }
   }
@@ -648,95 +644,121 @@ public class TeamSetting {
   public void personalGoalRank() {
     ArrayList<String> gRank = new ArrayList<String>();
 
-    String comma1 = " Goal / ";
-    String comma2 = " - [ ";
-    String comma3 = " ]";
-    String comma4 = "(";
-    String comma5 = ")";
-    String teamName = null;
-    String goal = null;
+    if (day == 1) {
+      System.out.printf("\n============================================="
+          + "\n         [경기를 먼저 진행해 주세요!]\n"
+          + "=============================================\n");
+      return;
+    }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamStriker; p++) {
-        goal = Integer.toString(league.striker[p].getGoal()) + comma1
-            + league.striker[p].getName() + comma4 + league.striker[p].getPosition() + comma5 + teamName;
 
-        gRank.add(goal);
+        gRank.add(setRankList(league,
+            league.getTeamName(),
+            "goal",
+            league.striker[p].getAssist(),
+            league.striker[p].getPosition(),
+            league.striker[p].getName()));
       }
     }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamMidfielder; p++) {
-        goal = Integer.toString(league.midfielder[p].getGoal()) + comma1
-            + league.midfielder[p].getName() + comma4 + league.midfielder[p].getPosition() + comma5 + teamName;
 
-        gRank.add(goal);
+        gRank.add(setRankList(league,
+            league.getTeamName(),
+            "goal",
+            league.midfielder[p].getAssist(),
+            league.midfielder[p].getPosition(),
+            league.midfielder[p].getName()));
       }
     }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamDefender; p++) {
-        goal = Integer.toString(league.defender[p].getGoal()) + comma1
-            + league.defender[p].getName() + comma4 + league.defender[p].getPosition() + comma5 + teamName;
 
-        gRank.add(goal);
+        gRank.add(setRankList(league,
+            league.getTeamName(),
+            "goal",
+            league.defender[p].getAssist(),
+            league.defender[p].getPosition(),
+            league.defender[p].getName()));
       }
     }
+
     Collections.sort(gRank, Collections.reverseOrder());
     for (int o = 0; o < teamSize; o++) {
-      System.out.printf("[ %d위 ]\n> %s\n", o + 1, gRank.get(o));
+      System.out.printf("[ %d위 ]> %s\n", o + 1, gRank.get(o));
     }
   }
 
   public void personalAssistRank() {
     ArrayList<String> aRank = new ArrayList<String>();
 
-    String comma1 = " Assist / ";
-    String comma2 = " - [ ";
-    String comma3 = " ]";
-    String comma4 = "(";
-    String comma5 = ")";
-    String teamName = null;
-    String goal = null;
+    if (day == 1) {
+      System.out.printf("\n============================================="
+          + "\n         [경기를 먼저 진행해 주세요!]\n"
+          + "=============================================\n");
+      return;
+    }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamStriker; p++) {
-        goal = Integer.toString(league.striker[p].getAssist()) + comma1
-            + league.striker[p].getName() + comma4 + league.striker[p].getPosition() + comma5 + teamName;
 
-        aRank.add(goal);
+        aRank.add(setRankList(league,
+            league.getTeamName(),
+            "Assist",
+            league.striker[p].getAssist(),
+            league.striker[p].getPosition(),
+            league.striker[p].getName()));
       }
     }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamMidfielder; p++) {
-        goal = Integer.toString(league.midfielder[p].getAssist()) + comma1
-            + league.midfielder[p].getName() + comma4 + league.midfielder[p].getPosition() + comma5 + teamName;
 
-        aRank.add(goal);
+        aRank.add(setRankList(league,
+            league.getTeamName(),
+            "Assist",
+            league.midfielder[p].getAssist(),
+            league.midfielder[p].getPosition(),
+            league.midfielder[p].getName()));
       }
     }
+
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      teamName = comma2 + league.getTeamName() + comma3;
       for (int p = 0; p < teamDefender; p++) {
-        goal = Integer.toString(league.defender[p].getAssist()) + comma1
-            + league.defender[p].getName() + comma4 + league.defender[p].getPosition() + comma5 + teamName;
 
-        aRank.add(goal);
+        aRank.add(setRankList(league,
+            league.getTeamName(),
+            "Assist",
+            league.defender[p].getAssist(),
+            league.defender[p].getPosition(),
+            league.defender[p].getName()));
       }
     }
     Collections.sort(aRank, Collections.reverseOrder());
     for (int o = 0; o < teamSize; o++) {
-      System.out.printf("[ %d위 ]\n> %s\n", o + 1, aRank.get(o));
+      System.out.printf("[ %d위 ]> %s\n", o + 1, aRank.get(o));
     }
   }
 
+  public String setRankList(LeagueTeam league, String teamNames,
+      String rank, int playerAssist, String playerPosition, String playName) {
+
+    String teamName = String.format(" - [ %s ]", teamNames);
+    String str = String.format("%d %s / %s(%s)",
+        playerAssist, rank, playName, playerPosition);
+
+    return teamName + str;
+  }
 
 }
 
