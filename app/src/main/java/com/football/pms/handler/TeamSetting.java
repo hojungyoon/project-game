@@ -283,12 +283,12 @@ public class TeamSetting {
   }
 
   @SuppressWarnings("unused")
-  public int[] makeRandomNumberArray(int[] nums, int size) {
+  public int[] makeRandomNumberArray(int[] nums, int size, int randomSize) {
     Random r = new Random();
     nums = new int[size];
 
     for (int i = 0; i < nums.length; i++) {
-      int temp = r.nextInt(size);
+      int temp = r.nextInt(randomSize);
       nums[i] = temp;
 
       for (int j = 0; j < i; j++) {
@@ -297,9 +297,8 @@ public class TeamSetting {
           break;
         }
       }
-      return nums;
     }
-    return null;
+    return nums;
   }
 
   public void playLeague() {
@@ -309,7 +308,7 @@ public class TeamSetting {
         + "\n\t      [%d라운드 대진표]\n"
         + "=============================================\n", day);
 
-    nums = makeRandomNumberArray(nums, teamSize);
+    nums = makeRandomNumberArray(nums, teamSize, teamSize);
 
     for (int o = 0; o < teamSize / 2; o++) {
       league = findByNo(nums[o]);
@@ -329,26 +328,15 @@ public class TeamSetting {
     int chance = 6;
 
     for (int o = 0; o < (teamSize / 2); o++) {
-      int homeTeam = 0, awayTeam = 0;
+      int homeTeam = 0, awayTeam = 0, second = 60, minute = 96 ;
 
-      int[] timeM = new int[chance];
-      int[] timeS = new int[chance];
-
-      for (int z = 0; z < chance; z++) {
-        int s = r.nextInt(60);
-        timeS[z] = s;
-      }
+      int[] timeM = new int[chance], timeS = new int[chance];
 
       for (int z = 0; z < chance; z++) {
-        int m = r.nextInt(96);
-        timeM[z] = m;
-        for (int x = 0; x < z; x++) {
-          if (timeM[x] == m) {
-            z--;
-            break;
-          }
-        }
+        timeS[z] = r.nextInt(second);
       }
+
+      timeM = makeRandomNumberArray(timeM, chance, minute);
       Arrays.sort(timeM);
 
       int chanceNum = 0;
@@ -356,11 +344,9 @@ public class TeamSetting {
 
       for (int x = 0; x < chance; x++) {
 
-        Random r2 = new Random();
-        int home = r2.nextInt(2);
+        int home = r.nextInt(2);
 
-        Random r3 = new Random();
-        int away = r3.nextInt(2);
+        int away = r.nextInt(2);
 
         if (home == away) {
           continue;
