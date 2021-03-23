@@ -31,21 +31,27 @@ public class ProfileSetting {
     return a + " " + b;
   }
 
-  public static String makeTeamName(int i) {
-
-    Random randomNum = new Random();
-
+  public static String firstTeamName(int i) {
     String[] firstTeamName = { " ", "동네근처", "할렐루야", "소심", "동네북", "바라심경"
         , "청양고추", "타코야끼", "콩나물", "설레발", "끼리끼리", "오합지졸", "쌈바"
         , "전국시대", "종합병원", "진격의"};
+
+
+    return  String.format(firstTeamName[i]);
+  }
+
+  public static String SecondTeamName() {
+    Random randomNum = new Random();
+
     String[] SecondTeamName = { "마드리드", "유나이티드", "FC"};
 
     int r = randomNum.nextInt(SecondTeamName.length);
 
+    return String.format(SecondTeamName[r]);
+  }
 
-    String n = firstTeamName[i] + " " + SecondTeamName[r];
-
-    return  n;
+  public static String makeTeamName(int i) {
+    return String.format("%s %s", firstTeamName(i), SecondTeamName());
   }
 
   public static int age() {

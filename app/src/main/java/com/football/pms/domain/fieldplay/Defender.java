@@ -11,6 +11,12 @@ public class Defender {
   int goal;
   int assist;
 
+  @Override
+  public String toString() {
+    return "Defender [name=" + name + ", age=" + age + ", height=" + height + ", weight=" + weight
+        + ", nation=" + nation + ", position=" + position + ", dismissal=" + dismissal + ", goal="
+        + goal + ", assist=" + assist + "]";
+  }
   public int getAssist() {
     return assist;
   }

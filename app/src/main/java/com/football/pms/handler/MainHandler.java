@@ -33,7 +33,7 @@ public class MainHandler {
       while(true) {
         int c2 = Prompt.inputInt("\n[_____Play Menu_____]"
             + "\n0.게임종료"
-            + "\n1.팀 및 선수정보"
+            + "\n1.내 팀 확인하기"
             + "\n2.타 팀 정보"
             + "\n3.경기진행"
             + "\n4.순위확인"
