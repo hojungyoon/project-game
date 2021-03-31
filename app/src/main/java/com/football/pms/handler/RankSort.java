@@ -1,8 +1,8 @@
 package com.football.pms.handler;
 
-import com.football.pms.domain.LeagueTeam;
+import com.football.pms.domain.fieldplay.PlayerProfile;
 
-public class RankSort implements Comparable<LeagueTeam> {
+public class RankSort implements Comparable<PlayerProfile> {
   private String teamName;
   private int assist;
   private String rank;
@@ -24,15 +24,14 @@ public class RankSort implements Comparable<LeagueTeam> {
   }
 
   @Override
-  public int compareTo(LeagueTeam rankSort) {
-    if (this.assist < rankSort) {
+  public int compareTo(PlayerProfile rankSort) {
+    if (this.assist < rankSort.getAssist()) {
       return -1;
-    } else if (this.assist == rankSort) {
+    } else if (this.assist == rankSort.getAssist()) {
       return 0;
     } else {
       return -1;
     }
-    return 0;
   }
 
 }

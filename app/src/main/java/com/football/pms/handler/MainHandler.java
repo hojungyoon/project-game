@@ -66,7 +66,7 @@ public class MainHandler {
             setting.playLeague();
             continue;
           case 4:
-            setting.ranking();
+            setting.teamRanking();
             continue;
           case 5:
             int c3 = Prompt.inputInt("\n1.다득점 순위\n2.어시스트 순위\n3.뒤로가기\n> ");
@@ -74,11 +74,11 @@ public class MainHandler {
               case 1:
                 setting.personalGoalRank();
                 break;
-              case 2:
-                setting.personalAssistRank();
-                break;
-              case 3:
-                break;
+                //                          case 2:
+                //                            setting.personalAssistRank();
+                //                            break;
+                //                          case 3:
+                //                            break;
             }
             continue;
         }

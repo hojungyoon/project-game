@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Random;
 import com.football.pms.domain.FA;
 import com.football.pms.domain.LeagueTeam;
-import com.football.pms.domain.fieldplay.Defender;
 import com.football.pms.domain.fieldplay.Kipper;
-import com.football.pms.domain.fieldplay.Midfielder;
-import com.football.pms.domain.fieldplay.Striker;
+import com.football.pms.domain.fieldplay.PlayerProfile;
+import com.football.pms.util.PersnalRankDecending;
 import com.football.pms.util.ProfileSetting;
 import com.football.pms.util.Prompt;
 import com.football.pms.util.TeamDecending1;
@@ -28,15 +27,50 @@ public class TeamSetting {
   private int teamStriker = 4;
   private int teamMidfielder = 7;
   private int teamDefender = 6;
+  private int allRounder = teamStriker + teamMidfielder + teamDefender;
   private int teamKipper = 2;
 
   private int day = 1;
 
   private List<LeagueTeam> list = new LinkedList<>();
+  private 
+
   //  private List FAlist = new List();
-  String[] matchRecodes = new String[5];
   Random r;
   int[] nums;
+
+  public List<PlayerProfile> makeTeamAllPlayer() {
+    List<PlayerProfile> pp = new ArrayList<>();
+
+    for (int i = 0; i < teamStriker; i++) {
+      pp.add(makeTeamPlayer("St"));
+    }
+
+    for (int i = teamStriker; i < teamStriker + teamMidfielder; i++) {
+      pp.add(makeTeamPlayer("Md"));
+    }
+
+    for (int i = teamStriker + teamMidfielder; i < allRounder; i++) {
+      pp.add(makeTeamPlayer("Df"));
+    }
+
+    return pp;
+  }
+
+  public PlayerProfile makeTeamPlayer(String position) {
+    PlayerProfile pl = new PlayerProfile();
+
+    pl.setHeight(ProfileSetting.height());
+    pl.setWeight(ProfileSetting.weight(pl.getHeight()));
+    pl.setName(ProfileSetting.makeRanName()); 
+    pl.setAge(ProfileSetting.age());
+    pl.setPosition(position);
+    pl.setNation(ProfileSetting.nationality());
+    pl.setDismissal(0);
+    pl.setGoal(0);
+
+    return pl;
+  }
 
   public void makeTeam(String tName, String tCoach) {
 
@@ -47,61 +81,9 @@ public class TeamSetting {
       league.setTeamName(ProfileSetting.makeTeamName(this.count));
       league.setCoachName(ProfileSetting.coachName(this.count));
 
-      Striker[] sta = new Striker[teamStriker];
+      league.setPlayerProfile(makeTeamAllPlayer());
 
-      for (int i = 0; i < teamStriker; i++) {
-        Striker st = new Striker();
-        st.setHeight(ProfileSetting.height());
-        st.setWeight(ProfileSetting.weight(st.getHeight()));
-        st.setName(ProfileSetting.makeRanName()); 
-        st.setAge(ProfileSetting.age());
-        st.setPosition("St");
-        st.setNation(ProfileSetting.nationality());
-        st.setDismissal(0);
-        st.setGoal(0);
-
-        sta[i] = st;
-
-        league.setStriker(sta);
-      }
-
-      Midfielder[] mda = new Midfielder[teamMidfielder];
-
-      for (int i = 0; i < teamMidfielder; i++) {
-        Midfielder md = new Midfielder();
-        md.setHeight(ProfileSetting.height()); 
-        md.setWeight(ProfileSetting.weight(md.getHeight()));
-        md.setName(ProfileSetting.makeRanName()); 
-        md.setAge(ProfileSetting.age()); 
-        md.setPosition("Mid");
-        md.setNation(ProfileSetting.nationality());
-        md.setDismissal(0);
-        md.setGoal(0);
-
-        mda[i] = md;
-
-        league.setMidfielder(mda);
-      }
-
-      Defender[] dfa = new Defender[teamDefender];
-
-      for (int i = 0; i < teamDefender; i++) {
-        Defender df = new Defender();
-        df.setHeight(ProfileSetting.height()); 
-        df.setWeight(ProfileSetting.weight(df.getHeight()));
-        df.setName(ProfileSetting.makeRanName()); 
-        df.setAge(ProfileSetting.age()); 
-        df.setPosition("Def");
-        df.setNation(ProfileSetting.nationality());
-        df.setDismissal(0);
-        df.setGoal(0);
-
-        dfa[i] = df;
-
-        league.setDefender(dfa);
-      }
-
-      Kipper[] kpa = new Kipper[teamKipper];
+      List<Kipper> kpa = new ArrayList<>();
 
       for (int i = 0; i < teamKipper; i++) {
         Kipper kp = new Kipper();
@@ -112,7 +94,7 @@ public class TeamSetting {
         kp.setPosition("Kip");
         kp.setNation(ProfileSetting.nationality());
 
-        kpa[i] = kp;
+        kpa.add(kp);
 
         league.setKipper(kpa);
       }
@@ -176,31 +158,13 @@ public class TeamSetting {
         + "> ");
     switch (c) {
       case 1:
-        for (int i = 0; i < teamStriker; i++) {
-          TeamPlayerInfo(
-              league.striker[i].getName(), league.striker[i].getNation()
-              , league.striker[i].getAge(), league.striker[i].getHeight()
-              , league.striker[i].getWeight(), league.striker[i].getAssist()
-              , league.striker[i].getGoal());
-        }
+        myTeamPlayerInfo(league, "St");
         break;
       case 2:
-        for (int i = 0; i < teamMidfielder; i++) {
-          TeamPlayerInfo(
-              league.midfielder[i].getName(), league.midfielder[i].getNation()
-              , league.midfielder[i].getAge(), league.midfielder[i].getHeight()
-              , league.midfielder[i].getWeight(), league.midfielder[i].getAssist()
-              , league.midfielder[i].getGoal());
-        }
+        myTeamPlayerInfo(league, "Md");
         break;
       case 3:
-        for (int i = 0; i < teamDefender; i++) {
-          TeamPlayerInfo(
-              league.defender[i].getName(), league.defender[i].getNation()
-              , league.defender[i].getAge(), league.defender[i].getHeight()
-              , league.defender[i].getWeight(), league.defender[i].getAssist()
-              , league.defender[i].getGoal());
-        }
+        myTeamPlayerInfo(league, "Df");
         break;
       case 4:
         for (int i = 0; i < teamKipper; i++) {
@@ -209,16 +173,31 @@ public class TeamSetting {
               + "\n 나 이 : %d세"
               + "\n 신 장 : %dcm"
               + "\n몸무게 : %dkg"
-              + "\n--------------------\n"
-              , league.kipper[i].getName(), league.kipper[i].getNation()
-              , league.kipper[i].getAge(), league.kipper[i].getHeight()
-              , league.kipper[i].getWeight());
+              + "\n--------------------\n", 
+              league.kipper.get(i).getName(),
+              league.kipper.get(i).getNation(),
+              league.kipper.get(i).getAge(),
+              league.kipper.get(i).getHeight(),
+              league.kipper.get(i).getWeight());
         }
         break;
+
       case 5:
         return;
     }
     return;
+  }
+
+  public void myTeamPlayerInfo(LeagueTeam league, String position) {
+    for (int i = 0; i < allRounder; i++) {
+      if (league.playerProfile.get(i).getPosition().equals(position)) {
+        TeamPlayerInfo(
+            league.playerProfile.get(i).getName(), league.playerProfile.get(i).getNation()
+            , league.playerProfile.get(i).getAge(), league.playerProfile.get(i).getHeight()
+            , league.playerProfile.get(i).getWeight(), league.playerProfile.get(i).getAssist()
+            , league.playerProfile.get(i).getGoal());
+      }
+    }    
   }
 
   public void otherTeam() {
@@ -243,28 +222,31 @@ public class TeamSetting {
       System.out.printf("<<<<< 선수목록 >>>>>\n");
 
       System.out.printf("1. 공격수\n");
-      for (int i = 0; i < teamStriker; i++) {
-        otherTeamPlayList(
-            league.striker[i].getGoal(), league.striker[i].getAssist()
-            , league.striker[i].getName(), league.striker[i].getAge());
-      }
+      otherTeamPlayerInfo(league, "St");
+
       System.out.printf("\n2. 미드필더\n");
-      for (int i = 0; i < teamMidfielder; i++) {
-        otherTeamPlayList(
-            league.midfielder[i].getGoal(), league.midfielder[i].getAssist()
-            , league.midfielder[i].getName(), league.midfielder[i].getAge());
-      }
+      otherTeamPlayerInfo(league, "Md");
+
       System.out.printf("\n3. 수비수\n");
-      for (int i = 0; i < teamDefender; i++) {
-        otherTeamPlayList(
-            league.defender[i].getGoal(), league.defender[i].getAssist()
-            , league.defender[i].getName(), league.defender[i].getAge());
-      }
+      otherTeamPlayerInfo(league, "Df");
+
       System.out.printf("\n4. 골키퍼\n");
       for (int i = 0; i < teamKipper; i++) {
-        System.out.printf("> %s (%d)\n", league.kipper[i].getName(), league.kipper[i].getAge());
+        System.out.printf("> %s (%d)\n",
+            league.kipper.get(i).getName(),
+            league.kipper.get(i).getAge());
       }
       return;
+    }
+  }
+
+  public void otherTeamPlayerInfo(LeagueTeam league, String position) {
+    for (int i = 0; i < allRounder; i++) {
+      if (league.playerProfile.get(i).getPosition().equals(position)) {
+        otherTeamPlayList(
+            league.playerProfile.get(i).getGoal(), league.playerProfile.get(i).getAssist()
+            , league.playerProfile.get(i).getName(), league.playerProfile.get(i).getAge());
+      }
     }
   }
 
@@ -332,12 +314,10 @@ public class TeamSetting {
       int homeTeam = 0, awayTeam = 0, second = 60, minute = 96, timeS = 0;
 
       int[] timeM = new int[chance];
-
-
       timeM = makeRandomNumberArray(timeM, chance, minute);
       Arrays.sort(timeM);
 
-      int chanceNum = 0;
+      int goalTime = 0;
       int percent = 10;
 
       for (int x = 0; x < chance; x++) {
@@ -345,201 +325,59 @@ public class TeamSetting {
         timeS = r.nextInt(second);
 
         int home = r.nextInt(2);
-
         int away = r.nextInt(2);
+
+        int goal = r.nextInt(allRounder);
+        int assist = r.nextInt(percent);
 
         if (home == away) {
           continue;
 
         } else if(home > away) {
+
           league = findByNo(nums[o]);
           homeTeam += 1;
 
-          int temp = r.nextInt(percent);
-          int st = r.nextInt(teamStriker);
-          int mid = r.nextInt(teamMidfielder);
-          int def = r.nextInt(teamDefender);
+          league.playerProfile.get(goal).setGoal(league.playerProfile.get(goal).getGoal() + 1);
+          System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n",
+              league.getTeamName(),
+              league.playerProfile.get(goal).getName(),
+              league.playerProfile.get(goal).getPosition(),
+              timeM[goalTime], timeS);
 
-          if(temp >= 0 && temp <= 5) {
-            league.striker[st].setGoal(league.striker[st].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.striker[st].getName(),
-                league.striker[st].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              if (league.striker[st].getName().equals(league.striker[st2].getName())) {
-                continue;
-              } else {
-                league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.striker[st2].getName(), league.striker[st2].getPosition());
-              }
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.defender[def2].getName(), league.defender[def2].getPosition());
-            }
-
-          } else if(temp >= 6 && temp <= 8) {
-            league.midfielder[mid].setGoal(league.midfielder[mid].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.midfielder[mid].getName(),
-                league.midfielder[mid].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              if (league.midfielder[mid].getName().equals(league.midfielder[mid2].getName())) {
-                continue;
-              } else {
-                league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-              }
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.striker[st2].getName(), league.striker[st2].getPosition());
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.defender[def2].getName(), league.defender[def2].getPosition());
-            }
-
+          if (league.playerProfile.get(goal).getName().equals(
+              league.playerProfile.get(assist).getName())) {
+            continue;
           } else {
-            league.defender[def].setGoal(league.midfielder[def].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.defender[def].getName(),
-                league.defender[def].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.striker[st2].getName(), league.striker[st2].getPosition());
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              if (league.defender[def].getName().equals(league.defender[def2].getName())) {
-                continue;
-              } else {
-                league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.defender[def2].getName(), league.defender[def2].getPosition());
-              }
-            }
+            league.playerProfile.get(assist).setAssist(
+                league.playerProfile.get(assist).getAssist() + 1);
+            System.out.printf("Assist.[%s] (%s)\n",
+                league.playerProfile.get(assist).getName(),
+                league.playerProfile.get(assist).getPosition());
           }
 
         } else if(home < away) {
           league = findByNo(nums[o + awayDivision]);
           awayTeam += 1;
+          league.playerProfile.get(goal).setGoal(league.playerProfile.get(goal).getGoal() + 1);
+          System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n",
+              league.getTeamName(),
+              league.playerProfile.get(goal).getName(),
+              league.playerProfile.get(goal).getPosition(),
+              timeM[goalTime], timeS);
 
-          int temp = r.nextInt(percent);
-          int st = r.nextInt(teamStriker);
-          int mid = r.nextInt(teamMidfielder);
-          int def = r.nextInt(teamDefender);
-
-          if(temp >= 0 && temp <= 4) {
-            league.striker[st].setGoal(league.striker[st].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.striker[st].getName(),
-                league.striker[st].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              if (league.striker[st].getName().equals(league.striker[st2].getName())) {
-                continue;
-              } else {
-                league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.striker[st2].getName(), league.striker[st2].getPosition());
-              }
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.defender[def2].getName(), league.defender[def2].getPosition());
-            }
-
-          } else if(temp >= 5 && temp <= 8) {
-            league.midfielder[mid].setGoal(league.midfielder[mid].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.midfielder[mid].getName(),
-                league.midfielder[mid].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              if (league.midfielder[mid].getName().equals(league.midfielder[mid2].getName())) {
-                continue;
-              } else {
-                league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-              }
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.striker[st2].getName(), league.striker[st2].getPosition());
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.defender[def2].getName(), league.defender[def2].getPosition());
-            }
-
+          if (league.playerProfile.get(goal).getName().equals(
+              league.playerProfile.get(assist).getName())) {
+            continue;
           } else {
-            league.defender[def].setGoal(league.midfielder[def].getGoal() + 1);
-            System.out.printf("\n[%s] - %s(%s) + 1 \"%d'%d\n"
-                , league.getTeamName(), league.defender[def].getName(),
-                league.defender[def].getPosition(), timeM[chanceNum], timeS);
-
-            temp = r.nextInt(percent);
-            if (temp >= 0 && temp <= 5) {
-              int mid2 = r.nextInt(teamMidfielder);
-              league.midfielder[mid2].setAssist(league.midfielder[mid2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.midfielder[mid2].getName(), league.midfielder[mid2].getPosition());
-            } else if (temp >= 6 && temp <= 8) {
-              int st2 = r.nextInt(teamStriker);
-              league.striker[st2].setAssist(league.striker[st2].getAssist() + 1);
-              System.out.printf("Assist.[%s] (%s)\n"
-                  , league.striker[st2].getName(), league.striker[st2].getPosition());
-            } else {
-              int def2 = r.nextInt(teamDefender);
-              if (league.defender[def].getName().equals(league.defender[def2].getName())) {
-                continue;
-              } else {
-                league.defender[def2].setAssist(league.defender[def2].getAssist() + 1);
-                System.out.printf("Assist.[%s] (%s)\n"
-                    , league.defender[def2].getName(), league.defender[def2].getPosition());
-              }
-            }
+            league.playerProfile.get(assist).setAssist(
+                league.playerProfile.get(assist).getAssist() + 1);
+            System.out.printf("Assist.[%s] (%s)\n",
+                league.playerProfile.get(assist).getName(),
+                league.playerProfile.get(assist).getPosition());
           }
         }
-        chanceNum++;
+        goalTime++;
       }
 
       int winPoint = 3, drawPoint = 1;
@@ -603,7 +441,7 @@ public class TeamSetting {
     day++;
   }
 
-  public void ranking() {
+  public void teamRanking() {
     if (day == 1) {
       System.out.printf("\n============================================="
           + "\n         [경기를 먼저 진행해 주세요!]\n"
@@ -628,7 +466,7 @@ public class TeamSetting {
   }
 
   public void personalGoalRank() {
-    ArrayList<String> gRank = new ArrayList<String>();
+    ArrayList<PlayerProfile> gRank = new ArrayList<>();
 
     if (day == 1) {
       System.out.printf("\n============================================="
@@ -639,49 +477,32 @@ public class TeamSetting {
 
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      for (int p = 0; p < teamStriker; p++) {
-
-        gRank.add(setRankList(
-            league.getTeamName(),
-            "goal",
-            league.striker[p].getAssist(),
-            league.striker[p].getPosition(),
-            league.striker[p].getName()));
+      for (int p = 0; p < allRounder; p++) {
+        gRank.add(league.playerProfile.get(p));
       }
     }
 
-    for (int o = 0; o < teamSize; o++) {
-      league = findByNo(o);
-      for (int p = 0; p < teamMidfielder; p++) {
+    PersnalRankDecending persnalRankDecending = new PersnalRankDecending();
+    Collections.sort(gRank, persnalRankDecending);
 
-        gRank.add(setRankList(
-            league.getTeamName(),
-            "goal",
-            league.midfielder[p].getAssist(),
-            league.midfielder[p].getPosition(),
-            league.midfielder[p].getName()));
-      }
-    }
-
-    for (int o = 0; o < teamSize; o++) {
-      league = findByNo(o);
-      for (int p = 0; p < teamDefender; p++) {
-
-        gRank.add(setRankList(
-            league.getTeamName(),
-            "goal",
-            league.defender[p].getAssist(),
-            league.defender[p].getPosition(),
-            league.defender[p].getName()));
-      }
-    }
-
-    Collections.sort(gRank, Collections.reverseOrder());
-
-    for (int o = 0; o < teamSize; o++) {
-      System.out.printf("[ %02d위 ]> %s\n", o + 1, gRank.get(o));
+    for (int o = 0; o < allRounder; o++) {
+      System.out.printf("[ %02d위 ]> - %02d As [%s]\n",
+          o,
+          gRank.get(o).getAssist(),
+          gRank.get(o).getName());
     }
   }
+
+  public String setRankList(String teamNames,
+      String rank, int playerAssist, String playerPosition, String playName) {
+
+    String teamName = String.format(" - [ %s ]", teamNames);
+    String str = String.format("%d %s / %s(%s)",
+        playerAssist, rank, playName, playerPosition);
+
+    return teamName + str;
+  }
+
 
   public void personalAssistRank() {
     ArrayList<String> aRank = new ArrayList<String>();
@@ -695,56 +516,22 @@ public class TeamSetting {
 
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
-      for (int p = 0; p < teamStriker; p++) {
+      for (int p = 0; p < allRounder; p++) {
 
         aRank.add(setRankList(
             league.getTeamName(),
             "Assist",
-            league.striker[p].getAssist(),
-            league.striker[p].getPosition(),
-            league.striker[p].getName()));
+            league.playerProfile[p].getAssist(),
+            league.playerProfile[p].getPosition(),
+            league.playerProfile[p].getName()));
       }
     }
 
-    for (int o = 0; o < teamSize; o++) {
-      league = findByNo(o);
-      for (int p = 0; p < teamMidfielder; p++) {
 
-        aRank.add(setRankList(
-            league.getTeamName(),
-            "Assist",
-            league.midfielder[p].getAssist(),
-            league.midfielder[p].getPosition(),
-            league.midfielder[p].getName()));
-      }
-    }
-
-    for (int o = 0; o < teamSize; o++) {
-      league = findByNo(o);
-      for (int p = 0; p < teamDefender; p++) {
-
-        aRank.add(setRankList(
-            league.getTeamName(),
-            "Assist",
-            league.defender[p].getAssist(),
-            league.defender[p].getPosition(),
-            league.defender[p].getName()));
-      }
-    }
-    Collections.sort(aRank, Collections.reverseOrder());
     for (int o = 0; o < teamSize; o++) {
       System.out.printf("[ %02d위 ]> - [ %s ]%d %s / %s(%s)\n", o + 1, aRank.get(o));
     }
   }
 
-  public String setRankList(String teamNames,
-      String rank, int playerAssist, String playerPosition, String playName) {
-
-    String teamName = String.format(" - [ %s ]", teamNames);
-    String str = String.format("%d %s / %s(%s)",
-        playerAssist, rank, playName, playerPosition);
-
-    return teamName + str;
-  }
 
 }
