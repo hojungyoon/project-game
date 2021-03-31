@@ -123,11 +123,5 @@ public class LeagueTeam {
     this.minusPoint = minusPoint;
   }
 
-  @Override
-  public String toString() {
-    return win + " 승  " + draw + " 무  " + loose + " 패  /  "
-        + "승점 " + point + "  득실차 " + scores + " / [" + teamName + "]";
-  }
-
 
 }

@@ -74,11 +74,11 @@ public class MainHandler {
               case 1:
                 setting.personalGoalRank();
                 break;
-                //                          case 2:
-                //                            setting.personalAssistRank();
-                //                            break;
-                //                          case 3:
-                //                            break;
+              case 2:
+                setting.personalAssistRank();
+                break;
+              case 3:
+                break;
             }
             continue;
         }

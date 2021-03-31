@@ -449,7 +449,6 @@ public class TeamSetting {
       return;
     }
     ArrayList<LeagueTeam> rank = new ArrayList<LeagueTeam>();
-    int rankNum = 1;
 
     for (int r = 0; r < teamSize; r++) {
       league = findByNo(r);
@@ -459,9 +458,15 @@ public class TeamSetting {
     TeamDecending1 teamDecending = new TeamDecending1();
     Collections.sort(rank, teamDecending);
 
-    for (LeagueTeam league : rank) {
-      System.out.printf("[ %02d위 ]> %s\n", rankNum, league);
-      rankNum++;
+    for (int o = 0; o < teamSize; o++) {
+      System.out.printf("[ %02d위 ]> %02d 승 %02d 무 %02d 패 / %02d 승점 %02d 득실차 / [%s]\n",
+          o + 1,
+          rank.get(o).getWin(),
+          rank.get(o).getDraw(),
+          rank.get(o).getLoose(),
+          rank.get(o).getPoint(),
+          rank.get(o).getScores(),
+          rank.get(o).getTeamName());
     }
   }
 
@@ -486,26 +491,15 @@ public class TeamSetting {
     Collections.sort(gRank, persnalRankDecending);
 
     for (int o = 0; o < allRounder; o++) {
-      System.out.printf("[ %02d위 ]> - %02d As [%s]\n",
+      System.out.printf("[ %02d위 ]> - %02d Goal [%s]\n",
           o,
-          gRank.get(o).getAssist(),
+          gRank.get(o).getGoal(),
           gRank.get(o).getName());
     }
   }
 
-  public String setRankList(String teamNames,
-      String rank, int playerAssist, String playerPosition, String playName) {
-
-    String teamName = String.format(" - [ %s ]", teamNames);
-    String str = String.format("%d %s / %s(%s)",
-        playerAssist, rank, playName, playerPosition);
-
-    return teamName + str;
-  }
-
-
   public void personalAssistRank() {
-    ArrayList<String> aRank = new ArrayList<String>();
+    ArrayList<PlayerProfile> aRank = new ArrayList<>();
 
     if (day == 1) {
       System.out.printf("\n============================================="
@@ -517,21 +511,19 @@ public class TeamSetting {
     for (int o = 0; o < teamSize; o++) {
       league = findByNo(o);
       for (int p = 0; p < allRounder; p++) {
-
-        aRank.add(setRankList(
-            league.getTeamName(),
-            "Assist",
-            league.playerProfile[p].getAssist(),
-            league.playerProfile[p].getPosition(),
-            league.playerProfile[p].getName()));
+        aRank.add(league.playerProfile.get(p));
       }
     }
 
+    PersnalRankDecending persnalRankDecending = new PersnalRankDecending();
+    Collections.sort(aRank, persnalRankDecending);
 
-    for (int o = 0; o < teamSize; o++) {
-      System.out.printf("[ %02d위 ]> - [ %s ]%d %s / %s(%s)\n", o + 1, aRank.get(o));
+    for (int o = 0; o < allRounder; o++) {
+      System.out.printf("[ %02d위 ]> - %02d Assist [%s]\n",
+          o,
+          aRank.get(o).getAssist(),
+          aRank.get(o).getName());
     }
   }
-
 
 }

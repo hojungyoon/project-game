@@ -1,6 +1,7 @@
 package com.football.pms.domain.fieldplay;
 
 public class PlayerProfile {
+  int playerCodeNo;
   String name;
   int age ;
   int height;
@@ -11,6 +12,12 @@ public class PlayerProfile {
   int goal;
   int assist;
 
+  public int getPlayerCodeNo() {
+    return playerCodeNo;
+  }
+  public void setPlayerCodeNo(int playerCodeNo) {
+    this.playerCodeNo = playerCodeNo;
+  }
   public String getName() {
     return name;
   }
