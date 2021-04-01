@@ -5,9 +5,11 @@ import com.football.pms.util.Prompt;
 
 public class MainHandler {
 
-  LeagueTeam league;
+  LeagueTeam league = new LeagueTeam();
 
   TeamSetting setting = new TeamSetting();
+  TeamList list = new TeamList(league);
+  PlayLeague playLeague = new PlayLeague(league);
 
   public void makeMyTeam() {
     while(true) {
@@ -54,28 +56,28 @@ public class MainHandler {
               }
             }
           case 1:
-            setting.privacy();
+            list.privacy();
             continue;
           case 2:
-            setting.otherTeam();
+            list.otherTeam();
             continue;
             //          case 4:
             //            setting.FAplayerList();
             //            continue;
           case 3:
-            setting.playLeague();
+            playLeague.playLeagues();
             continue;
           case 4:
-            setting.teamRanking();
+            playLeague.teamRanking();
             continue;
           case 5:
             int c3 = Prompt.inputInt("\n1.다득점 순위\n2.어시스트 순위\n3.뒤로가기\n> ");
             switch(c3) {
               case 1:
-                setting.personalGoalRank();
+                playLeague.personalGoalRank();
                 break;
               case 2:
-                setting.personalAssistRank();
+                playLeague.personalAssistRank();
                 break;
               case 3:
                 break;
