@@ -5,7 +5,7 @@ import com.football.pms.util.Prompt;
 
 public class MainHandler {
 
-  LeagueTeam league = new LeagueTeam();
+  LeagueTeam league = null;
 
   TeamSetting setting = new TeamSetting();
   TeamList list = new TeamList(league);
@@ -20,7 +20,7 @@ public class MainHandler {
 
         System.out.println("팀 세팅이 완료되었습니다.");
 
-        setting.makeTeam(tName, cName);
+        setting.makeTeam(league, tName, cName);
         //        setting.makeFAplayer();
         menu();
       } else if (c.equalsIgnoreCase("n")) {

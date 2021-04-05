@@ -1,5 +1,6 @@
 package com.football.pms;
 
+import com.football.pms.domain.LeagueTeam;
 import com.football.pms.handler.MainHandler;
 import com.football.pms.util.Prompt;
 
@@ -7,7 +8,8 @@ public class Main {
 
   public static void main(String[] args) {
 
-    MainHandler play = new MainHandler();
+    LeagueTeam league = null;
+    MainHandler play = new MainHandler(league);
 
     while(true) {
       System.out.println("[ Soccer ]");

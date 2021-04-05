@@ -62,7 +62,7 @@ public class TeamSetting {
     return pl;
   }
 
-  public void makeTeam(String tName, String tCoach) {
+  public void makeTeam(LeagueTeam league, String tName, String tCoach) {
 
     while(this.count < teamSize) {
       league = new LeagueTeam();
