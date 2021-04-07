@@ -1,14 +1,15 @@
 package com.football.pms.handler;
 
+import java.util.List;
 import com.football.pms.domain.LeagueTeam;
 import com.football.pms.util.Prompt;
 
 public class TeamList {
 
-  LeagueTeam league;
+  List<LeagueTeam> list;
 
-  public TeamList(LeagueTeam league) {
-    this.league = league;
+  public TeamList(List<LeagueTeam> list) {
+    this.list = list;
   }
 
   private int teamSize = 16;
@@ -18,7 +19,7 @@ public class TeamList {
   private int allRounder = teamStriker + teamMidfielder + teamDefender;
   private int teamKipper = 2;
 
-  TeamSetting set = new TeamSetting();
+  TeamSetting set = new TeamSetting(list);
 
   public void TeamPlayerInfo
   (String name, String nation, int age, int height, int weight, int assi, int goal) {
@@ -34,7 +35,7 @@ public class TeamList {
 
   }
 
-  public void privacy() {
+  public void privacy(LeagueTeam league) {
     System.out.printf("\n[  팀 및 선수 정보  ]\n");
     league = set.findByNo(0);
     System.out.printf(
@@ -101,51 +102,49 @@ public class TeamList {
   }
 
   public void otherTeam() {
-    for (int h = 1; h < teamSize; h++) {
-      league = set.findByNo(h);
+    for (int x = 1; x < teamSize; x++) {
       System.out.printf("\n%d. %s\n"
-          , h, league.getTeamName());
+          , x, list.get(x).getTeamName());
     }
     int no = Prompt.inputInt("\n(뒤로가기 : 99)> ");
     if (no == 99) {
       return;
     } else {
-      league = set.findByNo(no);
 
       System.out.printf("\n[  팀 정보  ]\n");
-      System.out.printf("팀 이름 : %s\n", league.getTeamName());
-      System.out.printf("팀 감독 : %s\n", league.getCoachName());
+      System.out.printf("팀 이름 : %s\n", list.get(no).getTeamName());
+      System.out.printf("팀 감독 : %s\n", list.get(no).getCoachName());
       System.out.printf("전   적 : %d승 %d무 %d패\n"
           + "득/실점 : %d / %d\n"
-          , league.getWin(), league.getDraw(), league.getLoose()
-          , league.getPlusPoint(), league.getMinusPoint());
+          , list.get(no).getWin(), list.get(no).getDraw(), list.get(no).getLoose()
+          , list.get(no).getPlusPoint(), list.get(no).getMinusPoint());
       System.out.printf("<<<<< 선수목록 >>>>>\n");
 
       System.out.printf("1. 공격수\n");
-      otherTeamPlayerInfo(league, "St");
+      otherTeamPlayerInfo(list.get(no), "St");
 
       System.out.printf("\n2. 미드필더\n");
-      otherTeamPlayerInfo(league, "Md");
+      otherTeamPlayerInfo(list.get(no), "Md");
 
       System.out.printf("\n3. 수비수\n");
-      otherTeamPlayerInfo(league, "Df");
+      otherTeamPlayerInfo(list.get(no), "Df");
 
       System.out.printf("\n4. 골키퍼\n");
       for (int i = 0; i < teamKipper; i++) {
         System.out.printf("> %s (%d)\n",
-            league.kipper.get(i).getName(),
-            league.kipper.get(i).getAge());
+            list.get(no).kipper.get(i).getName(),
+            list.get(no).kipper.get(i).getAge());
       }
       return;
     }
   }
 
-  public void otherTeamPlayerInfo(LeagueTeam league, String position) {
+  public void otherTeamPlayerInfo(LeagueTeam leagueTeam, String position) {
     for (int i = 0; i < allRounder; i++) {
-      if (league.playerProfile.get(i).getPosition().equals(position)) {
+      if (leagueTeam.playerProfile.get(i).getPosition().equals(position)) {
         otherTeamPlayList(
-            league.playerProfile.get(i).getGoal(), league.playerProfile.get(i).getAssist()
-            , league.playerProfile.get(i).getName(), league.playerProfile.get(i).getAge());
+            leagueTeam.playerProfile.get(i).getGoal(), leagueTeam.playerProfile.get(i).getAssist()
+            , leagueTeam.playerProfile.get(i).getName(), leagueTeam.playerProfile.get(i).getAge());
       }
     }
   }

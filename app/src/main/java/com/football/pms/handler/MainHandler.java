@@ -1,27 +1,28 @@
 package com.football.pms.handler;
 
+import java.util.LinkedList;
+import java.util.List;
 import com.football.pms.domain.LeagueTeam;
 import com.football.pms.util.Prompt;
 
 public class MainHandler {
 
-  LeagueTeam league = null;
+  private List<LeagueTeam> list = new LinkedList<>();
 
-  TeamSetting setting = new TeamSetting();
-  TeamList list = new TeamList(league);
-  PlayLeague playLeague = new PlayLeague(league);
+  TeamSetting setting = new TeamSetting(list);
+  TeamList teamlist = new TeamList(list);
+  PlayLeague playLeague = new PlayLeague(list);
 
   public void makeMyTeam() {
     while(true) {
       String tName = Prompt.inputString("\n팀의 이름을 정해주세요.\n> ");
       String cName = Prompt.inputString("\n감독의 이름을 정해주세요.\n> ");
-      String c = Prompt.inputString("이름으로 진행 하시겠습니까? [y/N] > ");
+      String c = Prompt.inputString("입력하신 이름으로 진행 하시겠습니까? [y/N] > ");
       if (c.equalsIgnoreCase("y")) {
 
         System.out.println("팀 세팅이 완료되었습니다.");
 
         setting.makeTeam(league, tName, cName);
-        //        setting.makeFAplayer();
         menu();
       } else if (c.equalsIgnoreCase("n")) {
         continue;
@@ -56,14 +57,11 @@ public class MainHandler {
               }
             }
           case 1:
-            list.privacy();
+            list.privacy(league);
             continue;
           case 2:
             list.otherTeam();
             continue;
-            //          case 4:
-            //            setting.FAplayerList();
-            //            continue;
           case 3:
             playLeague.playLeagues();
             continue;

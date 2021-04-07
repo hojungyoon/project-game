@@ -1,9 +1,7 @@
 package com.football.pms.handler;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import com.football.pms.domain.FA;
 import com.football.pms.domain.LeagueTeam;
 import com.football.pms.domain.fieldplay.Kipper;
 import com.football.pms.domain.fieldplay.PlayerProfile;
@@ -11,10 +9,11 @@ import com.football.pms.util.ProfileSetting;
 
 public class TeamSetting {
 
-  LeagueTeam league;
-  FA fa = new FA(); ;
+  List<LeagueTeam> list;
 
-  private int count = 0;
+  public TeamSetting(List<LeagueTeam> list) {
+    this.list = list;
+  }
 
   private int teamSize = 16;
 
@@ -24,10 +23,41 @@ public class TeamSetting {
   private int allRounder = teamStriker + teamMidfielder + teamDefender;
   private int teamKipper = 2;
 
-  private List<LeagueTeam> list = new LinkedList<>();
+  public void makeTeam(String tName, String tCoach) {
+    LeagueTeam league;
 
-  //  private List FAlist = new List();
+    for (int i = 0; i < teamSize; i++) {
+      league = new LeagueTeam();
 
+      league.setTeamCode(i);
+      league.setTeamName(ProfileSetting.makeTeamName(i));
+      league.setCoachName(ProfileSetting.coachName(i));
+
+      league.setPlayerProfile(makeTeamAllPlayer());
+
+      List<Kipper> kpa = new ArrayList<>();
+
+      for (int y = 0; y < teamKipper; y++) {
+        Kipper kp = new Kipper();
+        kp.setHeight(kipperHei()); 
+        kp.setWeight(ProfileSetting.weight(kp.getHeight())); 
+        kp.setName(ProfileSetting.makeRanName()); 
+        kp.setAge(ProfileSetting.age()); 
+        kp.setPosition("Kip");
+        kp.setNation(ProfileSetting.nationality());
+
+        kpa.add(kp);
+
+        league.setKipper(kpa);
+      }
+
+      list.add(league);
+    }
+
+    league = findByNo(0);
+    league.setTeamName(String.format("%s %s", tName, ProfileSetting.SecondTeamName()));
+    league.setCoachName(tCoach);
+  }
 
   public List<PlayerProfile> makeTeamAllPlayer() {
     List<PlayerProfile> pp = new ArrayList<>();
@@ -62,43 +92,6 @@ public class TeamSetting {
     return pl;
   }
 
-  public void makeTeam(LeagueTeam league, String tName, String tCoach) {
-
-    while(this.count < teamSize) {
-      league = new LeagueTeam();
-
-      league.setTeamCode(this.count);
-      league.setTeamName(ProfileSetting.makeTeamName(this.count));
-      league.setCoachName(ProfileSetting.coachName(this.count));
-
-      league.setPlayerProfile(makeTeamAllPlayer());
-
-      List<Kipper> kpa = new ArrayList<>();
-
-      for (int i = 0; i < teamKipper; i++) {
-        Kipper kp = new Kipper();
-        kp.setHeight(kipperHei()); 
-        kp.setWeight(ProfileSetting.weight(kp.getHeight())); 
-        kp.setName(ProfileSetting.makeRanName()); 
-        kp.setAge(ProfileSetting.age()); 
-        kp.setPosition("Kip");
-        kp.setNation(ProfileSetting.nationality());
-
-        kpa.add(kp);
-
-        league.setKipper(kpa);
-      }
-
-      list.add(league);
-      count++;
-
-    }
-
-    league = findByNo(0);
-    league.setTeamName(String.format("%s %s", tName, ProfileSetting.SecondTeamName()));
-    league.setCoachName(tCoach);
-  }
-
   public int kipperHei() {
     int i = 0;
     while(i < 185) {
@@ -110,7 +103,6 @@ public class TeamSetting {
     return i;
   }
 
-
   public LeagueTeam findByNo(int No) {
     Object[] list = this.list.toArray();
     for (Object obj : list) {
@@ -121,7 +113,5 @@ public class TeamSetting {
     }
     return null;
   }
-
-
 
 }

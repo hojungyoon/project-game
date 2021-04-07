@@ -3,6 +3,7 @@ package com.football.pms.handler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import com.football.pms.domain.LeagueTeam;
 import com.football.pms.domain.fieldplay.PlayerProfile;
@@ -12,10 +13,10 @@ import com.football.pms.util.TeamDecending1;
 
 public class PlayLeague {
 
-  LeagueTeam league;
+  List<LeagueTeam> list;
 
-  public PlayLeague(LeagueTeam league) {
-    this.league = league;
+  public PlayLeague(List<LeagueTeam> list) {
+    this.list = list;
   }
 
   private int teamSize = 16;
@@ -30,7 +31,7 @@ public class PlayLeague {
   Random r;
   int[] nums;
 
-  TeamSetting set = new TeamSetting();
+  TeamSetting set = new TeamSetting(list);
 
   public void playLeagues() {
     int awayDivision = 8;
@@ -41,12 +42,20 @@ public class PlayLeague {
 
     nums = makeRandomNumberArray(nums, teamSize, teamSize);
 
+    List<LeagueTeam> home = new ArrayList<>();
+    List<LeagueTeam> away = new ArrayList<>();
+
     for (int o = 0; o < teamSize / 2; o++) {
-      league = set.findByNo(nums[o]);
-      System.out.printf("\n[ %s ]",league.getTeamName());
-      league = set.findByNo(nums[o + awayDivision]);
-      System.out.printf(" vs [ %s ]\n", league.getTeamName());
+      if (list.get(o).getTeamCode() == nums[o]) {
+        home.add(list.get(o));
+      } else {
+        away.add(list.get(o + awayDivision));
+      }
     }
+
+    System.out.printf("\n[ %s ]",league.getTeamName());
+    System.out.printf(" vs [ %s ]\n", league.getTeamName());
+
     String play = Prompt.inputString("\n경기를 시작하겠습니까? [y/N]> ");
     if (play.equalsIgnoreCase("y")) {
       System.out.printf("\n============================================="
